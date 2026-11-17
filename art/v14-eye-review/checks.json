@@ -1,0 +1,26 @@
+{
+  "components": 12,
+  "irisCompleteDiscs": 2,
+  "eyeWhiteIndependent": true,
+  "openAndClosedLashPartsIndependent": true,
+  "protectedPixelsChanged": 0,
+  "pixelDifferenceThreshold": 3,
+  "allowedEyeRegionBufferPixels": 3,
+  "eyeRegionChangedPixels": 35983,
+  "inspectionEditRegionClip": true,
+  "faceSkinPart": "Complete blank skin and concealed forehead",
+  "continuousLidGeometryVerified": false,
+  "cubismImportVerified": false,
+  "visualAcceptance": "pending",
+  "standardEyeSides": [
+    {
+      "imageSide": "screen-left",
+      "openParameter": "ParamEyeROpen"
+    },
+    {
+      "imageSide": "screen-right",
+      "openParameter": "ParamEyeLOpen"
+    }
+  ],
+  "scope": "Artwork component preparation and source-pixel protection only; isolated ink registration recorded separately"
+}

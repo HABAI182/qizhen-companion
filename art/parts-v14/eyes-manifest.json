@@ -1,0 +1,167 @@
+{
+  "version": 14,
+  "kind": "Independent artwork components; rig/export pending",
+  "canvas": {
+    "width": 1254,
+    "height": 1254
+  },
+  "basis": "v13",
+  "layers": [
+    {
+      "id": "face-skin",
+      "name": "完整脸底与隐藏额头",
+      "file": "face-skin.png",
+      "x": 339,
+      "y": 359,
+      "width": 547,
+      "height": 555,
+      "group": "face",
+      "hiddenArt": "Complete continuous forehead and blank skin; original visible cheek/chin pixels restored",
+      "editorImportVerified": false
+    },
+    {
+      "id": "eye-screen-left-white",
+      "name": "screen-left 完整眼白",
+      "file": "eye-screen-left-white.png",
+      "x": 370,
+      "y": 648,
+      "width": 158,
+      "height": 96,
+      "group": "eye-white",
+      "clipId": "eye-screen-left-aperture",
+      "standardOpen": "ParamEyeROpen",
+      "oldIrisPaintRemoved": true
+    },
+    {
+      "id": "eye-screen-left-iris",
+      "name": "screen-left 完整虹膜",
+      "file": "eye-screen-left-iris.png",
+      "x": 407,
+      "y": 641,
+      "width": 127,
+      "height": 127,
+      "group": "iris",
+      "clipId": "eye-screen-left-aperture",
+      "completeDisc": true,
+      "originalCorePixels": true,
+      "seamBlendPixels": 4
+    },
+    {
+      "id": "eye-screen-left-upper-lash",
+      "name": "screen-left 上睫毛",
+      "file": "eye-screen-left-upper-lash.png",
+      "x": 326,
+      "y": 626,
+      "width": 210,
+      "height": 85,
+      "group": "lash-upper",
+      "standardOpen": "ParamEyeROpen",
+      "source": "Source stroke pixels matted inside traced outline; hidden ink completed from isolated imagegen source"
+    },
+    {
+      "id": "eye-screen-left-lower-lash",
+      "name": "screen-left 下眼线",
+      "file": "eye-screen-left-lower-lash.png",
+      "x": 397,
+      "y": 738,
+      "width": 120,
+      "height": 9,
+      "group": "lash-lower",
+      "standardOpen": "ParamEyeROpen"
+    },
+    {
+      "id": "eye-screen-left-closed-lash",
+      "name": "screen-left 闭眼形参照",
+      "file": "eye-screen-left-closed-lash.png",
+      "x": 347,
+      "y": 692,
+      "width": 190,
+      "height": 50,
+      "group": "closed-lash",
+      "hidden": true,
+      "continuousLidRigVerified": false
+    },
+    {
+      "id": "eye-screen-right-white",
+      "name": "screen-right 完整眼白",
+      "file": "eye-screen-right-white.png",
+      "x": 685,
+      "y": 701,
+      "width": 161,
+      "height": 109,
+      "group": "eye-white",
+      "clipId": "eye-screen-right-aperture",
+      "standardOpen": "ParamEyeLOpen",
+      "oldIrisPaintRemoved": true
+    },
+    {
+      "id": "eye-screen-right-iris",
+      "name": "screen-right 完整虹膜",
+      "file": "eye-screen-right-iris.png",
+      "x": 682,
+      "y": 691,
+      "width": 129,
+      "height": 127,
+      "group": "iris",
+      "clipId": "eye-screen-right-aperture",
+      "completeDisc": true,
+      "originalCorePixels": true,
+      "seamBlendPixels": 4
+    },
+    {
+      "id": "eye-screen-right-upper-lash",
+      "name": "screen-right 上睫毛",
+      "file": "eye-screen-right-upper-lash.png",
+      "x": 675,
+      "y": 678,
+      "width": 218,
+      "height": 124,
+      "group": "lash-upper",
+      "standardOpen": "ParamEyeLOpen",
+      "source": "Source stroke pixels matted inside traced outline; hidden ink completed from isolated imagegen source"
+    },
+    {
+      "id": "eye-screen-right-lower-lash",
+      "name": "screen-right 下眼线",
+      "file": "eye-screen-right-lower-lash.png",
+      "x": 688,
+      "y": 778,
+      "width": 160,
+      "height": 36,
+      "group": "lash-lower",
+      "standardOpen": "ParamEyeLOpen"
+    },
+    {
+      "id": "eye-screen-right-closed-lash",
+      "name": "screen-right 闭眼形参照",
+      "file": "eye-screen-right-closed-lash.png",
+      "x": 673,
+      "y": 731,
+      "width": 193,
+      "height": 63,
+      "group": "closed-lash",
+      "hidden": true,
+      "continuousLidRigVerified": false
+    },
+    {
+      "id": "mouth-line",
+      "name": "原画闭口嘴线",
+      "file": "mouth-line.png",
+      "x": 564,
+      "y": 808,
+      "width": 52,
+      "height": 17,
+      "group": "mouth"
+    }
+  ],
+  "clipping": [
+    {
+      "id": "eye-screen-left-aperture",
+      "path": "M369 693 C383 670 412 652 440 649 C474 644 497 652 515 676 C529 696 532 725 520 744 C485 741 446 742 409 743 C382 741 368 726 369 693Z"
+    },
+    {
+      "id": "eye-screen-right-aperture",
+      "path": "M687 748 C693 718 716 703 744 701 C784 698 815 717 838 748 C852 765 850 782 839 797 C822 813 804 812 783 804 L692 782 C687 773 684 761 687 748Z"
+    }
+  ]
+}

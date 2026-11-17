@@ -1,0 +1,56 @@
+{
+  "source": "actual Cubism MCP keyforms and native renderer",
+  "meshes": [
+    {
+      "id": "ArtMesh7",
+      "side": "R",
+      "palm": true,
+      "formsWritten": 17,
+      "minTriangleAreaRatio": 0.9649849507036126
+    },
+    {
+      "id": "ArtMesh11",
+      "side": "R",
+      "palm": false,
+      "formsWritten": 17,
+      "minTriangleAreaRatio": 0.864668232584238
+    },
+    {
+      "id": "ArtMesh6",
+      "side": "L",
+      "palm": true,
+      "formsWritten": 17,
+      "minTriangleAreaRatio": 0.9649826513562743
+    },
+    {
+      "id": "ArtMesh10",
+      "side": "L",
+      "palm": false,
+      "formsWritten": 17,
+      "minTriangleAreaRatio": 0.45504659786480695
+    }
+  ],
+  "newParameters": [
+    "ParamHandRPress",
+    "ParamHandRX",
+    "ParamHandRY",
+    "ParamHandLPress",
+    "ParamHandLX",
+    "ParamHandLY"
+  ],
+  "caseNames": [
+    "neutral",
+    "mouse-press",
+    "keyboard-press",
+    "both-press",
+    "keyboard-left",
+    "keyboard-right",
+    "mouse-reach"
+  ],
+  "sourceArtCompleteness": "pending v14 clean-part replacement",
+  "visualAcceptance": "pending",
+  "saveReopenVerified": true,
+  "desktopInputVerified": false,
+  "neutralPixelsExactlyPreserved": true,
+  "neutralRestoredExactly": true
+}

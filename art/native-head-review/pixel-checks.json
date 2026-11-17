@@ -1,0 +1,51 @@
+{
+  "neutralPixelsExactlyPreserved": true,
+  "ninePosePixelChanges": [
+    {
+      "x": -30,
+      "y": -30,
+      "changedPixels": 142424
+    },
+    {
+      "x": 0,
+      "y": -30,
+      "changedPixels": 120897
+    },
+    {
+      "x": 30,
+      "y": -30,
+      "changedPixels": 140966
+    },
+    {
+      "x": -30,
+      "y": 0,
+      "changedPixels": 138546
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "changedPixels": 0
+    },
+    {
+      "x": 30,
+      "y": 0,
+      "changedPixels": 138031
+    },
+    {
+      "x": -30,
+      "y": 30,
+      "changedPixels": 143341
+    },
+    {
+      "x": 0,
+      "y": 30,
+      "changedPixels": 123277
+    },
+    {
+      "x": 30,
+      "y": 30,
+      "changedPixels": 143551
+    }
+  ],
+  "originalPoseRestored": true
+}

@@ -1,0 +1,19 @@
+{
+  "saveReopenVerified": true,
+  "meshSnapshotsMatched": 22,
+  "meshSnapshotsChecked": 22,
+  "statistics": {
+    "parameterCount": 33,
+    "partCount": 1,
+    "drawableCount": 27,
+    "artMeshCount": 27,
+    "deformerCount": 1,
+    "vertexCount": 3352,
+    "triangleCount": 5239,
+    "textureCount": 27,
+    "maskedDrawableCount": 0,
+    "maskGroupCount": 0,
+    "offscreenRenderingCount": 0,
+    "maxOffscreenDepth": 0
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "ok": true,
+  "stopOnError": true,
+  "results": [
+    {
+      "index": 0,
+      "operation": "bind",
+      "ok": true,
+      "result": {
+        "outcome": "APPLIED",
+        "retryable": false,
+        "canonicalPointIds": [
+          "ParamHandLX:0",
+          "ParamHandLX:1",
+          "ParamHandLX:2"
+        ],
+        "parameterId": "ParamHandLX",
+        "target": {
+          "type": "art_mesh",
+          "id": "ArtMesh6"
+        },
+        "bound": true,
+        "binding": {
+          "parameterId": "ParamHandLX",
+          "target": {
+            "type": "art_mesh",
+            "id": "ArtMesh6"
+          },
+          "family": "keyform_grid",
+          "points": [
+            {
+              "id": "ParamHandLX:0",
+              "value": -1.0
+            },
+            {
+              "id": "ParamHandLX:1",
+              "value": 0.0
+            },
+            {
+              "id": "ParamHandLX:2",
+              "value": 1.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "index": 1,
+      "operation": "bind",
+      "ok": true,
+      "result": {
+        "outcome": "APPLIED",
+        "retryable": false,
+        "canonicalPointIds": [
+          "ParamHandLY:0",
+          "ParamHandLY:1",
+          "ParamHandLY:2"
+        ],
+        "parameterId": "ParamHandLY",
+        "target": {
+          "type": "art_mesh",
+          "id": "ArtMesh6"
+        },
+        "bound": true,
+        "binding": {
+          "parameterId": "ParamHandLY",
+          "target": {
+            "type": "art_mesh",
+            "id": "ArtMesh6"
+          },
+          "family": "keyform_grid",
+          "points": [
+            {
+              "id": "ParamHandLY:0",
+              "value": -1.0
+            },
+            {
+              "id": "ParamHandLY:1",
+              "value": 0.0
+            },
+            {
+              "id": "ParamHandLY:2",
+              "value": 1.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "index": 2,
+      "operation": "bind",
+      "ok": true,
+      "result": {
+        "outcome": "APPLIED",
+        "retryable": false,
+        "canonicalPointIds": [
+          "ParamHandLPress:0",
+          "ParamHandLPress:1"
+        ],
+        "parameterId": "ParamHandLPress",
+        "target": {
+          "type": "art_mesh",
+          "id": "ArtMesh6"
+        },
+        "bound": true,
+        "binding": {
+          "parameterId": "ParamHandLPress",
+          "target": {
+            "type": "art_mesh",
+            "id": "ArtMesh6"
+          },
+          "family": "keyform_grid",
+          "points": [
+            {
+              "id": "ParamHandLPress:0",
+              "value": 0.0
+            },
+            {
+              "id": "ParamHandLPress:1",
+              "value": 1.0
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

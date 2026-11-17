@@ -1,0 +1,167 @@
+{
+  "basis": "v13 approved neutral art",
+  "source": "actual native SDK snapshots",
+  "method": "shared bounded smooth displacement field in native canvas coordinates",
+  "nativeWriteVerified": true,
+  "visualAcceptance": "pending",
+  "meshes": [
+    {
+      "mesh": "ArtMesh4",
+      "vertices": 46,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 12.694022984230607,
+      "minimumTriangleAreaRatio": 0.9836566897574812,
+      "request": "ArtMesh4-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh5",
+      "vertices": 56,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 13.331634086726012,
+      "minimumTriangleAreaRatio": 0.9836428216943892,
+      "request": "ArtMesh5-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh12",
+      "vertices": 231,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 13.02855913120141,
+      "minimumTriangleAreaRatio": 0.9799066065678307,
+      "request": "ArtMesh12-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh13",
+      "vertices": 104,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 16.819970179954456,
+      "minimumTriangleAreaRatio": 0.9932186097837985,
+      "request": "ArtMesh13-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh14",
+      "vertices": 31,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 13.872757300043073,
+      "minimumTriangleAreaRatio": 0.9874821758833795,
+      "request": "ArtMesh14-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh15",
+      "vertices": 28,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 13.510516626237763,
+      "minimumTriangleAreaRatio": 0.9862221040940089,
+      "request": "ArtMesh15-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh16",
+      "vertices": 4,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 13.490360210268678,
+      "minimumTriangleAreaRatio": 0.9865459864414861,
+      "request": "ArtMesh16-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh17",
+      "vertices": 76,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 13.17293896300745,
+      "minimumTriangleAreaRatio": 0.9861941712598006,
+      "request": "ArtMesh17-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh18",
+      "vertices": 137,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 13.422333923425082,
+      "minimumTriangleAreaRatio": 0.9837002342059221,
+      "request": "ArtMesh18-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh19",
+      "vertices": 37,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 15.542184829081002,
+      "minimumTriangleAreaRatio": 0.9905336307963859,
+      "request": "ArtMesh19-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh20",
+      "vertices": 4,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 15.721800160676544,
+      "minimumTriangleAreaRatio": 0.9918418603582978,
+      "request": "ArtMesh20-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh21",
+      "vertices": 68,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 15.121898992730147,
+      "minimumTriangleAreaRatio": 0.9904777780849345,
+      "request": "ArtMesh21-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh22",
+      "vertices": 142,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 15.65150199399367,
+      "minimumTriangleAreaRatio": 0.9901496045173321,
+      "request": "ArtMesh22-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh23",
+      "vertices": 170,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 15.767250159071443,
+      "minimumTriangleAreaRatio": 0.9854990675646398,
+      "request": "ArtMesh23-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh24",
+      "vertices": 513,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 16.847378505503496,
+      "minimumTriangleAreaRatio": 0.9326848597088834,
+      "request": "ArtMesh24-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh25",
+      "vertices": 275,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 10.839669569727226,
+      "minimumTriangleAreaRatio": 0.9456241193774386,
+      "request": "ArtMesh25-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    },
+    {
+      "mesh": "ArtMesh26",
+      "vertices": 241,
+      "nonDefaultForms": 8,
+      "maximumVertexDelta": 15.903427052353877,
+      "minimumTriangleAreaRatio": 0.9567856764310235,
+      "request": "ArtMesh26-head-xy.request.json",
+      "neutralPreservedByConstruction": true
+    }
+  ],
+  "nativeWrittenForms": 136,
+  "neutralPixelsExactlyPreserved": true,
+  "nineNativePosesCaptured": true,
+  "artAcceptance": "nine-pose internal review only; complete model acceptance pending",
+  "saveReopenVerified": true
+}

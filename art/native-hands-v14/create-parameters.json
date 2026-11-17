@@ -1,0 +1,409 @@
+{
+  "ok": true,
+  "stopOnError": true,
+  "results": [
+    {
+      "index": 0,
+      "operation": "create_many",
+      "ok": true,
+      "result": {
+        "created": [
+          {
+            "id": "ParamHandRPress",
+            "name": "鼠标右手 Press",
+            "value": 0.0,
+            "minimumValue": 0.0,
+            "defaultValue": 0.0,
+            "maximumValue": 1.0,
+            "type": "normal",
+            "repeat": false
+          },
+          {
+            "id": "ParamHandRX",
+            "name": "鼠标右手 X",
+            "value": 0.0,
+            "minimumValue": -1.0,
+            "defaultValue": 0.0,
+            "maximumValue": 1.0,
+            "type": "normal",
+            "repeat": false
+          },
+          {
+            "id": "ParamHandRY",
+            "name": "鼠标右手 Y",
+            "value": 0.0,
+            "minimumValue": -1.0,
+            "defaultValue": 0.0,
+            "maximumValue": 1.0,
+            "type": "normal",
+            "repeat": false
+          },
+          {
+            "id": "ParamHandLPress",
+            "name": "键盘左手 Press",
+            "value": 0.0,
+            "minimumValue": 0.0,
+            "defaultValue": 0.0,
+            "maximumValue": 1.0,
+            "type": "normal",
+            "repeat": false
+          },
+          {
+            "id": "ParamHandLX",
+            "name": "键盘左手 X",
+            "value": 0.0,
+            "minimumValue": -1.0,
+            "defaultValue": 0.0,
+            "maximumValue": 1.0,
+            "type": "normal",
+            "repeat": false
+          },
+          {
+            "id": "ParamHandLY",
+            "name": "键盘左手 Y",
+            "value": 0.0,
+            "minimumValue": -1.0,
+            "defaultValue": 0.0,
+            "maximumValue": 1.0,
+            "type": "normal",
+            "repeat": false
+          }
+        ],
+        "outcome": "APPLIED",
+        "retryable": false
+      }
+    }
+  ],
+  "parameters": [
+    {
+      "id": "ParamAngleX",
+      "name": "角度 X",
+      "value": 0.0,
+      "minimumValue": -30.0,
+      "defaultValue": 0.0,
+      "maximumValue": 30.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamAngleY",
+      "name": "角度 Y",
+      "value": 0.0,
+      "minimumValue": -30.0,
+      "defaultValue": 0.0,
+      "maximumValue": 30.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamAngleZ",
+      "name": "角度 Z",
+      "value": 0.0,
+      "minimumValue": -30.0,
+      "defaultValue": 0.0,
+      "maximumValue": 30.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamEyeLOpen",
+      "name": "左眼 开闭",
+      "value": 1.0,
+      "minimumValue": 0.0,
+      "defaultValue": 1.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamEyeLSmile",
+      "name": "左眼 微笑",
+      "value": 0.0,
+      "minimumValue": 0.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamEyeROpen",
+      "name": "右眼 开闭",
+      "value": 1.0,
+      "minimumValue": 0.0,
+      "defaultValue": 1.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamEyeRSmile",
+      "name": "右眼 微笑",
+      "value": 0.0,
+      "minimumValue": 0.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamEyeBallX",
+      "name": "眼珠 X",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamEyeBallY",
+      "name": "眼珠 Y",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBrowLY",
+      "name": "左眉 上下",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBrowRY",
+      "name": "右眉 上下",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBrowLX",
+      "name": "左眉 左右",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBrowRX",
+      "name": "右眉 左右",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBrowLAngle",
+      "name": "左眉 角度",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBrowRAngle",
+      "name": "右眉 角度",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBrowLForm",
+      "name": "左眉 変形",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBrowRForm",
+      "name": "右眉 変形",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamMouthForm",
+      "name": "嘴 变形",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamMouthOpenY",
+      "name": "嘴 开闭",
+      "value": 0.0,
+      "minimumValue": 0.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamCheek",
+      "name": "脸颊泛红",
+      "value": 0.0,
+      "minimumValue": 0.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBodyAngleX",
+      "name": "身体旋转 X",
+      "value": 0.0,
+      "minimumValue": -10.0,
+      "defaultValue": 0.0,
+      "maximumValue": 10.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBodyAngleY",
+      "name": "身体旋转 Y",
+      "value": 0.0,
+      "minimumValue": -10.0,
+      "defaultValue": 0.0,
+      "maximumValue": 10.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBodyAngleZ",
+      "name": "身体旋转 Z",
+      "value": 0.0,
+      "minimumValue": -10.0,
+      "defaultValue": 0.0,
+      "maximumValue": 10.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamBreath",
+      "name": "呼吸",
+      "value": 0.0,
+      "minimumValue": 0.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHairFront",
+      "name": "摇动 前发",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHairSide",
+      "name": "摇动 侧发",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHairBack",
+      "name": "摇动 后发",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHandRPress",
+      "name": "鼠标右手 Press",
+      "value": 0.0,
+      "minimumValue": 0.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHandRX",
+      "name": "鼠标右手 X",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHandRY",
+      "name": "鼠标右手 Y",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHandLPress",
+      "name": "键盘左手 Press",
+      "value": 0.0,
+      "minimumValue": 0.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHandLX",
+      "name": "键盘左手 X",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    },
+    {
+      "id": "ParamHandLY",
+      "name": "键盘左手 Y",
+      "value": 0.0,
+      "minimumValue": -1.0,
+      "defaultValue": 0.0,
+      "maximumValue": 1.0,
+      "type": "normal",
+      "repeat": false
+    }
+  ]
+}

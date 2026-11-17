@@ -1,0 +1,68 @@
+{
+  "source": "Cubism native renderer through public SDK MCP",
+  "modelId": "eb1e8ebb-8059-433f-a39b-ff4aaa415c4c",
+  "size": [
+    627,
+    627
+  ],
+  "originalPoseRestored": true,
+  "captures": [
+    {
+      "x": -30,
+      "y": -30,
+      "file": "head-x-30-y-30.png",
+      "bytes": 625425
+    },
+    {
+      "x": 0,
+      "y": -30,
+      "file": "head-x+00-y-30.png",
+      "bytes": 624066
+    },
+    {
+      "x": 30,
+      "y": -30,
+      "file": "head-x+30-y-30.png",
+      "bytes": 620848
+    },
+    {
+      "x": -30,
+      "y": 0,
+      "file": "head-x-30-y+00.png",
+      "bytes": 629763
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "file": "head-x+00-y+00.png",
+      "bytes": 627076
+    },
+    {
+      "x": 30,
+      "y": 0,
+      "file": "head-x+30-y+00.png",
+      "bytes": 625012
+    },
+    {
+      "x": -30,
+      "y": 30,
+      "file": "head-x-30-y+30.png",
+      "bytes": 638095
+    },
+    {
+      "x": 0,
+      "y": 30,
+      "file": "head-x+00-y+30.png",
+      "bytes": 636956
+    },
+    {
+      "x": 30,
+      "y": 30,
+      "file": "head-x+30-y+30.png",
+      "bytes": 631163
+    }
+  ],
+  "artAcceptance": "pending",
+  "mocExportVerified": false,
+  "desktopInteractionVerified": false
+}

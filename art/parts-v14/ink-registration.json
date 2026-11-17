@@ -1,0 +1,122 @@
+[
+  {
+    "label": "screen-left upper",
+    "generatedBounds": {
+      "left": 212,
+      "top": 573,
+      "width": 355,
+      "height": 147
+    },
+    "referenceBounds": {
+      "left": 326,
+      "top": 626,
+      "width": 213,
+      "height": 104
+    },
+    "scale": [
+      0.6,
+      0.7074829931972789
+    ],
+    "purpose": "Register an isolated generated ink component to the approved source stroke bounds; eye-region redraw only"
+  },
+  {
+    "label": "screen-left lower",
+    "generatedBounds": {
+      "left": 319,
+      "top": 757,
+      "width": 93,
+      "height": 26
+    },
+    "referenceBounds": {
+      "left": 387,
+      "top": 737,
+      "width": 137,
+      "height": 16
+    },
+    "scale": [
+      1.4731182795698925,
+      0.6153846153846154
+    ],
+    "purpose": "Register an isolated generated ink component to the approved source stroke bounds; eye-region redraw only"
+  },
+  {
+    "label": "screen-left closed",
+    "generatedBounds": {
+      "left": 334,
+      "top": 713,
+      "width": 231,
+      "height": 59
+    },
+    "referenceBounds": {
+      "left": 347,
+      "top": 692,
+      "width": 191,
+      "height": 50
+    },
+    "scale": [
+      0.8268398268398268,
+      0.847457627118644
+    ],
+    "purpose": "Register an isolated generated ink component to the approved source stroke bounds; eye-region redraw only"
+  },
+  {
+    "label": "screen-right upper",
+    "generatedBounds": {
+      "left": 764,
+      "top": 668,
+      "width": 342,
+      "height": 169
+    },
+    "referenceBounds": {
+      "left": 671,
+      "top": 675,
+      "width": 222,
+      "height": 113
+    },
+    "scale": [
+      0.6491228070175439,
+      0.6686390532544378
+    ],
+    "purpose": "Register an isolated generated ink component to the approved source stroke bounds; eye-region redraw only"
+  },
+  {
+    "label": "screen-right lower",
+    "generatedBounds": {
+      "left": 858,
+      "top": 847,
+      "width": 122,
+      "height": 25
+    },
+    "referenceBounds": {
+      "left": 687,
+      "top": 779,
+      "width": 160,
+      "height": 42
+    },
+    "scale": [
+      1.3114754098360655,
+      1.68
+    ],
+    "purpose": "Register an isolated generated ink component to the approved source stroke bounds; eye-region redraw only"
+  },
+  {
+    "label": "screen-right closed",
+    "generatedBounds": {
+      "left": 691,
+      "top": 781,
+      "width": 247,
+      "height": 56
+    },
+    "referenceBounds": {
+      "left": 673,
+      "top": 731,
+      "width": 193,
+      "height": 63
+    },
+    "scale": [
+      0.7813765182186235,
+      1.125
+    ],
+    "purpose": "Register an isolated generated ink component to the approved source stroke bounds; eye-region redraw only"
+  }
+]
