@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "canvas": {
+    "width": 1254,
+    "height": 1254
+  },
+  "basis": "Approved v13 with exact official ZJU SVG marks",
+  "kind": "Layered artwork preview; no Cubism model export",
+  "layers": [
+    {
+      "id": "torso",
+      "name": "01 身体与隐藏衣料",
+      "file": "/assets/parts/torso.png",
+      "x": 402,
+      "y": 852,
+      "width": 410,
+      "height": 216,
+      "group": "body"
+    },
+    {
+      "id": "side-hair-left",
+      "name": "02 画面左侧后发",
+      "file": "/assets/parts/side-hair-left.png",
+      "x": 0,
+      "y": 691,
+      "width": 225,
+      "height": 375,
+      "group": "hair",
+      "pivot": [
+        203,
+        758
+      ]
+    },
+    {
+      "id": "side-hair-right",
+      "name": "03 画面右侧后发",
+      "file": "/assets/parts/side-hair-right.png",
+      "x": 1038,
+      "y": 629,
+      "width": 216,
+      "height": 461,
+      "group": "hair",
+      "pivot": [
+        1064,
+        746
+      ]
+    },
+    {
+      "id": "head",
+      "name": "04 头发与完整脸底",
+      "file": "/assets/parts/head.png",
+      "x": 0,
+      "y": 19,
+      "width": 1250,
+      "height": 1235,
+      "group": "head"
+    },
+    {
+      "id": "ahoge",
+      "name": "05 呆毛",
+      "file": "/assets/parts/ahoge.png",
+      "x": 583,
+      "y": 70,
+      "width": 274,
+      "height": 149,
+      "group": "hair",
+      "pivot": [
+        674,
+        210
+      ]
+    },
+    {
+      "id": "eye-L",
+      "name": "06L 眼白与眼线",
+      "file": "/assets/parts/eye-L.png",
+      "x": 322,
+      "y": 594,
+      "width": 228,
+      "height": 174,
+      "group": "eye"
+    },
+    {
+      "id": "iris-L",
+      "name": "07L 原画虹膜瞳孔",
+      "file": "/assets/parts/iris-L.png",
+      "x": 408,
+      "y": 647,
+      "width": 120,
+      "height": 97,
+      "group": "iris",
+      "mask": "M369 693 C383 670 412 652 440 649 C474 644 497 652 515 676 C529 696 532 725 520 744 C485 741 446 742 409 743 C382 741 368 726 369 693Z",
+      "coverage": "Visible source iris; extra hidden iris rim remains a Cubism preparation task."
+    },
+    {
+      "id": "closed-eye-L",
+      "name": "08L 闭眼替换",
+      "file": "/assets/parts/closed-eye-L.png",
+      "x": 322,
+      "y": 594,
+      "width": 228,
+      "height": 174,
+      "group": "closed-eye",
+      "hidden": true
+    },
+    {
+      "id": "brow-L",
+      "name": "09L 眉毛",
+      "file": "/assets/parts/brow-L.png",
+      "x": 395,
+      "y": 534,
+      "width": 125,
+      "height": 26,
+      "group": "head"
+    },
+    {
+      "id": "eye-R",
+      "name": "06R 眼白与眼线",
+      "file": "/assets/parts/eye-R.png",
+      "x": 663,
+      "y": 654,
+      "width": 237,
+      "height": 180,
+      "group": "eye"
+    },
+    {
+      "id": "iris-R",
+      "name": "07R 原画虹膜瞳孔",
+      "file": "/assets/parts/iris-R.png",
+      "x": 685,
+      "y": 701,
+      "width": 124,
+      "height": 103,
+      "group": "iris",
+      "mask": "M687 748 C693 718 716 703 744 701 C784 698 815 717 838 748 C852 765 850 782 839 797 C822 813 804 812 783 804 L692 782 C687 773 684 761 687 748Z",
+      "coverage": "Visible source iris; extra hidden iris rim remains a Cubism preparation task."
+    },
+    {
+      "id": "closed-eye-R",
+      "name": "08R 闭眼替换",
+      "file": "/assets/parts/closed-eye-R.png",
+      "x": 663,
+      "y": 654,
+      "width": 237,
+      "height": 180,
+      "group": "closed-eye",
+      "hidden": true
+    },
+    {
+      "id": "brow-R",
+      "name": "09R 眉毛",
+      "file": "/assets/parts/brow-R.png",
+      "x": 725,
+      "y": 565,
+      "width": 81,
+      "height": 47,
+      "group": "head"
+    },
+    {
+      "id": "mouth",
+      "name": "10 原画嘴形",
+      "file": "/assets/parts/mouth.png",
+      "x": 551,
+      "y": 800,
+      "width": 72,
+      "height": 33,
+      "group": "mouth"
+    },
+    {
+      "id": "feather-left",
+      "name": "11 画面左侧羽饰",
+      "file": "/assets/parts/feather-left.png",
+      "x": 224,
+      "y": 287,
+      "width": 123,
+      "height": 252,
+      "group": "ornament"
+    },
+    {
+      "id": "feather-right",
+      "name": "12 画面右侧羽饰",
+      "file": "/assets/parts/feather-right.png",
+      "x": 891,
+      "y": 225,
+      "width": 337,
+      "height": 566,
+      "group": "ornament"
+    },
+    {
+      "id": "sleeve-mouse",
+      "name": "13 鼠标侧袖口",
+      "file": "/assets/parts/sleeve-mouse.png",
+      "x": 85,
+      "y": 806,
+      "width": 367,
+      "height": 238,
+      "group": "mouse-hand"
+    },
+    {
+      "id": "sleeve-keyboard",
+      "name": "14 键盘侧袖口",
+      "file": "/assets/parts/sleeve-keyboard.png",
+      "x": 681,
+      "y": 869,
+      "width": 298,
+      "height": 111,
+      "group": "keyboard-hand"
+    },
+    {
+      "id": "mouse",
+      "name": "15 完整鼠标",
+      "file": "/assets/parts/mouse.png",
+      "x": 56,
+      "y": 958,
+      "width": 238,
+      "height": 150,
+      "group": "mouse"
+    },
+    {
+      "id": "keyboard",
+      "name": "16 完整键盘",
+      "file": "/assets/parts/keyboard.png",
+      "x": 238,
+      "y": 978,
+      "width": 966,
+      "height": 192,
+      "group": "device"
+    },
+    {
+      "id": "palm-mouse",
+      "name": "17 鼠标侧手掌",
+      "file": "/assets/parts/palm-mouse.png",
+      "x": 125,
+      "y": 879,
+      "width": 167,
+      "height": 99,
+      "group": "mouse-hand"
+    },
+    {
+      "id": "palm-keyboard",
+      "name": "18 键盘侧手掌",
+      "file": "/assets/parts/palm-keyboard.png",
+      "x": 702,
+      "y": 892,
+      "width": 157,
+      "height": 102,
+      "group": "keyboard-hand"
+    },
+    {
+      "id": "official-eagle-hairpin",
+      "name": "19 发夹求是鹰",
+      "file": "/assets/parts/official-eagle-hairpin.png",
+      "x": 877,
+      "y": 365,
+      "width": 101,
+      "height": 84,
+      "group": "ornament",
+      "officialVector": true
+    },
+    {
+      "id": "official-complete-university-seal",
+      "name": "20 头饰完整浙大校标",
+      "file": "/assets/parts/official-complete-university-seal.png",
+      "x": 905,
+      "y": 463,
+      "width": 70,
+      "height": 70,
+      "group": "ornament",
+      "officialVector": true
+    },
+    {
+      "id": "official-complete-bow-seal",
+      "name": "21 胸前完整浙大校标",
+      "file": "/assets/parts/official-complete-bow-seal.png",
+      "x": 589,
+      "y": 930,
+      "width": 31,
+      "height": 31,
+      "group": "body",
+      "officialVector": true
+    },
+    {
+      "id": "official-eagle-mouse",
+      "name": "22 鼠标求是鹰",
+      "file": "/assets/parts/official-eagle-mouse.png",
+      "x": 149,
+      "y": 1027,
+      "width": 47,
+      "height": 42,
+      "group": "mouse",
+      "officialVector": true
+    },
+    {
+      "id": "official-eagle-keyboard",
+      "name": "23 键盘求是鹰",
+      "file": "/assets/parts/official-eagle-keyboard.png",
+      "x": 1063,
+      "y": 1122,
+      "width": 40,
+      "height": 34,
+      "group": "device",
+      "officialVector": true
+    }
+  ]
+}

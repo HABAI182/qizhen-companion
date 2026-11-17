@@ -1,0 +1,217 @@
+{
+  "character": "浙大娘",
+  "platform": "Windows x64",
+  "lockedNeutralReference": "本任务 v13 完整校徽候选，由用户授权进入制作",
+  "sourceCanvas": {
+    "width": 1254,
+    "height": 1254
+  },
+  "anatomicalRightHand": "screen-left mouse",
+  "anatomicalLeftHand": "screen-right keyboard",
+  "identity": [
+    "墨蓝长发与银蓝发梢",
+    "原设不对称刘海与弯呆毛",
+    "蓝白羽饰与小金色求是鹰",
+    "头饰及领结完整官方校标",
+    "蓝白金学院服"
+  ],
+  "sourceTruth": {
+    "visibleArt": "尽量沿用 v13 原像素拆件，隐藏区由 imagegen 补绘",
+    "officialMarks": "官网原始矢量路径，独立图层，禁止生图重画",
+    "editableArt": "将独立 PNG 组装为 RGB 8-bit sRGB PSD",
+    "rig": "必须由真实 Cubism Editor 或受支持官方接口导出，不构造 MOC3 二进制"
+  },
+  "plannedLayers": [
+    "torso-underpaint",
+    "head-base",
+    "side-hair-screen-left",
+    "side-hair-screen-right",
+    "ahoge",
+    "face-underpaint",
+    "eye-white-screen-left",
+    "eye-white-screen-right",
+    "iris-screen-left",
+    "iris-screen-right",
+    "eye-line-screen-left",
+    "eye-line-screen-right",
+    "closed-eye-screen-left",
+    "closed-eye-screen-right",
+    "mouth",
+    "feather-screen-left",
+    "feather-screen-right",
+    "official-eagle-hairpin",
+    "official-head-seal",
+    "official-bow-seal",
+    "keyboard",
+    "mouse",
+    "mouse-palm-cuff",
+    "keyboard-palm-cuff"
+  ],
+  "initialControls": [
+    "headX",
+    "headY",
+    "headZ",
+    "eyeOpenLeft",
+    "eyeOpenRight",
+    "eyeBallX",
+    "eyeBallY",
+    "breath",
+    "keyboardPress",
+    "keyboardReach",
+    "keyboardDepth",
+    "mousePress",
+    "mouseX",
+    "mouseY"
+  ],
+  "acceptance": [
+    "原位重组对照中性图，官方标识路径不变",
+    "单独移动双手和鼠标时底层完整，手不携带脸发残片",
+    "闭眼没有旧眼框，视线协调且不越界",
+    "真实按键边沿触发；autorepeat 保持，不重启回弹",
+    "打包 EXE 实测透明窗、全局输入、托盘、设置保存和恢复热键"
+  ],
+  "status": "0.1.0 Windows分层动作预览已编译；27层PSD已校验；未完成Cubism导入、网格绑定或CMO3/MOC3导出",
+  "realizedLayers": [
+    {
+      "id": "torso",
+      "group": "body",
+      "officialVector": false
+    },
+    {
+      "id": "side-hair-left",
+      "group": "hair",
+      "officialVector": false
+    },
+    {
+      "id": "side-hair-right",
+      "group": "hair",
+      "officialVector": false
+    },
+    {
+      "id": "head",
+      "group": "head",
+      "officialVector": false
+    },
+    {
+      "id": "ahoge",
+      "group": "hair",
+      "officialVector": false
+    },
+    {
+      "id": "eye-L",
+      "group": "eye",
+      "officialVector": false
+    },
+    {
+      "id": "iris-L",
+      "group": "iris",
+      "officialVector": false
+    },
+    {
+      "id": "closed-eye-L",
+      "group": "closed-eye",
+      "officialVector": false
+    },
+    {
+      "id": "brow-L",
+      "group": "head",
+      "officialVector": false
+    },
+    {
+      "id": "eye-R",
+      "group": "eye",
+      "officialVector": false
+    },
+    {
+      "id": "iris-R",
+      "group": "iris",
+      "officialVector": false
+    },
+    {
+      "id": "closed-eye-R",
+      "group": "closed-eye",
+      "officialVector": false
+    },
+    {
+      "id": "brow-R",
+      "group": "head",
+      "officialVector": false
+    },
+    {
+      "id": "mouth",
+      "group": "mouth",
+      "officialVector": false
+    },
+    {
+      "id": "feather-left",
+      "group": "ornament",
+      "officialVector": false
+    },
+    {
+      "id": "feather-right",
+      "group": "ornament",
+      "officialVector": false
+    },
+    {
+      "id": "sleeve-mouse",
+      "group": "mouse-hand",
+      "officialVector": false
+    },
+    {
+      "id": "sleeve-keyboard",
+      "group": "keyboard-hand",
+      "officialVector": false
+    },
+    {
+      "id": "mouse",
+      "group": "mouse",
+      "officialVector": false
+    },
+    {
+      "id": "keyboard",
+      "group": "device",
+      "officialVector": false
+    },
+    {
+      "id": "palm-mouse",
+      "group": "mouse-hand",
+      "officialVector": false
+    },
+    {
+      "id": "palm-keyboard",
+      "group": "keyboard-hand",
+      "officialVector": false
+    },
+    {
+      "id": "official-eagle-hairpin",
+      "group": "ornament",
+      "officialVector": true
+    },
+    {
+      "id": "official-complete-university-seal",
+      "group": "ornament",
+      "officialVector": true
+    },
+    {
+      "id": "official-complete-bow-seal",
+      "group": "body",
+      "officialVector": true
+    },
+    {
+      "id": "official-eagle-mouse",
+      "group": "mouse",
+      "officialVector": true
+    },
+    {
+      "id": "official-eagle-keyboard",
+      "group": "device",
+      "officialVector": true
+    }
+  ],
+  "pending": [
+    "完整隐藏虹膜边缘及饰品背后头发补全",
+    "连续眼睑几何",
+    "Cubism真实绑定与原生导出",
+    "原生设置、点击穿透与全局键鼠/游戏实机验收"
+  ]
+}

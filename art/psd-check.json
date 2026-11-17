@@ -1,0 +1,14 @@
+{
+  "format": "8BPS",
+  "canvas": [
+    1254,
+    1254
+  ],
+  "bitsPerChannel": 8,
+  "colorMode": "RGB",
+  "layers": 27,
+  "layerPixelAndOffsetRoundTrip": true,
+  "bytes": 7508009,
+  "editorImportVerified": false,
+  "rigExportVerified": false
+}

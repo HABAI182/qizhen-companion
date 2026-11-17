@@ -1,0 +1,19 @@
+{
+  "renderer": {
+    "mode": "layered-artwork",
+    "layerCount": 27,
+    "width": 1254,
+    "height": 1254
+  },
+  "cases": [
+    "neutral",
+    "closed",
+    "key-left-far",
+    "key-right-near",
+    "mouse-click",
+    "nod"
+  ],
+  "eyePatchChangedPixels": 54729,
+  "closedEyeChangesOutsideEyeRegion": 0,
+  "checks": "Canvas rendering and authored patch selection only; no claim of native desktop input or Cubism Core verification"
+}

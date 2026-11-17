@@ -1,0 +1,4 @@
+本项目由 HABAI182 管理，当前交付供本地制作、个人学习与桌面陪伴使用。
+通用程序代码来源与原许可见 THIRD-PARTY-NOTICES.md、LICENSE-CHANG-LI-MIT.txt。
+角色原始参考、浙江大学校标与第三方程序库保留各自权利和来源。
+当前版本未包含 Live2D Core、Framework、CMO3 或 MOC3。

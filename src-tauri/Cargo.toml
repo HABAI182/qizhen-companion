@@ -1,0 +1,22 @@
+[package]
+name = "zju-companion"
+version = "0.1.0"
+description = "浙大娘桌面伴侣制作预览"
+authors = ["HABAI182"]
+edition = "2021"
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]
+edition-basic = []
+edition-static = []
+
+[build-dependencies]
+tauri-build = { version = "=2.6.3", features = [] }
+
+[dependencies]
+tauri = { version = "=2.11.6", features = ["tray-icon"] }
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.151"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "=0.61.2", features = ["Win32_Foundation", "Win32_UI_WindowsAndMessaging", "Win32_UI_Input_KeyboardAndMouse", "Win32_System_LibraryLoader", "Win32_System_Threading", "Win32_System_Registry", "Win32_Security", "Win32_UI_Shell", "Win32_UI_Input_XboxController", "Win32_Media_Audio"] }
