@@ -1,0 +1,2 @@
+# Preserve the downloaded official vector's bytes for its recorded source hash.
+art/source/official-marks/*-原文件.svg -text
