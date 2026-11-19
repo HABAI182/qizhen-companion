@@ -1,7 +1,7 @@
 [package]
 name = "zju-companion"
-version = "0.1.0"
-description = "浙大娘桌面伴侣制作预览"
+version = "0.2.0"
+description = "浙大娘桌面伴侣"
 authors = ["HABAI182"]
 edition = "2021"
 
@@ -9,6 +9,7 @@ edition = "2021"
 custom-protocol = ["tauri/custom-protocol"]
 edition-basic = []
 edition-static = []
+native-qa = []
 
 [build-dependencies]
 tauri-build = { version = "=2.6.3", features = [] }

@@ -8,13 +8,13 @@ const rows=[
  ['ControlLeft','MetaLeft','AltLeft','Space','AltRight','MetaRight','ContextMenu','ControlRight']
 ];
 export function keyTarget(code){
- if(code==='Space')return {x:-.25,y:0,zone:'space'};
+ if(code==='Space')return {x:-.38,y:0,zone:'space'};
  for(let r=0;r<rows.length;r++){const c=rows[r].indexOf(code);if(c<0)continue;
   const left=c<(r===0?6:r===5?3:6),far=r<=2;
-  return {x:left?.65:-.85,y:far?1:.35,zone:`${left?'left':'right'}-${far?'far':'near'}`};
+  return {x:left?.73:-.88,y:far?1:.35,zone:`${left?'left':'right'}-${far?'far':'near'}`};
  }
  if(/^Numpad|^Arrow|^(Insert|Delete|Home|End|PageUp|PageDown|PrintScreen|ScrollLock|Pause)$/.test(code)){
-  const far=/Up|Home|PageUp|Divide|Multiply|Subtract|[789]$/.test(code);return {x:-.85,y:far?1:.35,zone:far?'right-far':'right-near'};
+  const far=/Up|Home|PageUp|Divide|Multiply|Subtract|[789]$/.test(code);return {x:-.88,y:far?1:.35,zone:far?'right-far':'right-near'};
  }
  return {x:0,y:.35,zone:'left-near'};
 }

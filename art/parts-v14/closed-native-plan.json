@@ -1,0 +1,34 @@
+[
+  {
+    "id": "eye-screen-left-closed-clean",
+    "name": "ZJU-v14-eye-screen-left-closed-clean",
+    "file": "native-padded/eye-screen-left-closed-clean.png",
+    "x": 347,
+    "y": 703,
+    "width": 256,
+    "height": 64,
+    "group": "closed-lash",
+    "columns": 22,
+    "rows": 7,
+    "drawOrder": 640,
+    "visible": false,
+    "parentDeformer": "RotationDeformerZJUHeadRotation",
+    "sha256": "9576181a88c49dafda97822cd14cc48d1b66f66ea3ce3725d2f07807ee30724e"
+  },
+  {
+    "id": "eye-screen-right-closed-clean",
+    "name": "ZJU-v14-eye-screen-right-closed-clean",
+    "file": "native-padded/eye-screen-right-closed-clean.png",
+    "x": 673,
+    "y": 755,
+    "width": 256,
+    "height": 64,
+    "group": "closed-lash",
+    "columns": 22,
+    "rows": 7,
+    "drawOrder": 640,
+    "visible": false,
+    "parentDeformer": "RotationDeformerZJUHeadRotation",
+    "sha256": "7a9417b34bd23d89931be701fe3f5d87e9a1ca259a9d8b167ecf4bda776cc801"
+  }
+]

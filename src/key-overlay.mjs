@@ -1,4 +1,12 @@
 const allowed=/^(?:[A-Z0-9]|F(?:[1-9]|1[0-9]|2[0-4])|Enter|Backspace|Space|Tab|Esc|Shift|Ctrl|Alt|CapsLock|[←↑→↓]|Home|End|PageUp|PageDown|Insert|Delete|Num [0-9]|[;,./=\-`\[\]\\'])$/;
+const compactLabels={
+ Backspace:'Bksp',CapsLock:'Caps',PageDown:'PgDn',PageUp:'PgUp',
+ Insert:'Ins',Delete:'Del',Space:'空格',Enter:'回车',
+};
+export function compactKeyLabel(label){
+ if(Object.hasOwn(compactLabels,label))return compactLabels[label];
+ return /^Num [0-9]$/.test(label)?label.replace(' ',''):label;
+}
 // Bounded ephemeral badges only; never serialized into preferences or logs.
 export class KeyOverlay {
  badges=[];sequence=0;

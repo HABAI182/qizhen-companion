@@ -1,5 +1,5 @@
 export type Snapshot={keyboardPress:number,mousePress:number,keyboardBounce:number,mouseBounce:number,reach:number,depth:number,zone:string,label:string};
-export type FrameOptions={gaze:{x:number,y:number},pointer:{x:number,y:number},intensity:number,idle:boolean,expression:string,actionAge:number,headElasticity:number,keyboardScale:number,mouseScale:number,gazeScale:number};
+export type FrameOptions={gaze:{x:number,y:number},pointer:{x:number,y:number},intensity:number,idle:boolean,expression:string,actionAge:number,touchAge?:number,headElasticity:number,keyboardScale:number,mouseScale:number,gazeScale:number,mouseEnabled:boolean};
 type Layer={id:string,file:string,x:number,y:number,width:number,height:number,group?:string,pivot?:[number,number],mask?:string,image:HTMLImageElement};
 export const loadImage=(url:string)=>new Promise<HTMLImageElement>((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>reject(new Error(`素材读取失败：${url}`));image.src=url;});
 

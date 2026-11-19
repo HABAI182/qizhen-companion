@@ -1,5 +1,7 @@
 # 来源
 
-Windows 原生输入、窗口、托盘与偏好设置代码，及输入动作状态机，改编自用户 HABAI182 的 yangyang-xuanling-companion；长离 MIT 来源声明保留于 LICENSE-CHANG-LI-MIT.txt。未复用其他角色的美术、模型或语音。
+Windows 原生输入、窗口、托盘、偏好和输入动作状态机改编自 HABAI182 的秧秧桌宠，参考提交 `db3f352ebb1f856cc291f631daa2ea57eb2965d3`。长离的 MIT 许可随项目保存在 LICENSE-CHANG-LI-MIT.txt。 [秧秧桌宠](https://github.com/HABAI182/yangyang-xuanling-companion)
 
 角色美术使用本任务冻结的浙大娘 v13 图稿；校标来自浙江大学官网原始矢量，来源及校验随模型素材保存。未声明官方出品。Tauri、serde、windows-sys、Vite、TypeScript 各遵循自身许可。
+
+运行时使用 Live2D Cubism SDK for Web。Core 的专有软件许可和可随附文件清单，以及 Framework 的开放软件许可见 `public/vendor/live2d`。框架源随附在 `vendor/live2d/src`。

@@ -4,6 +4,7 @@ import {InputState} from '../src/state.mjs';
 import {KeyOverlay} from '../src/key-overlay.mjs';
 import {GazeController} from '../src/gaze-controller.mjs';
 import {normalizePreferences} from '../src/preferences.mjs';
+import {keyTarget} from '../src/key-target.mjs';
 
 const idle={keysHeld:0,mouseDown:false,newPress:false,newMousePress:false,keyLabel:'',reach:0};
 test('OS repeat keeps a held pose without kicking another head bounce',()=>{
@@ -20,6 +21,29 @@ test('a mouse press does not reroute or release the keyboard hand',()=>{
  const s=new InputState();s.update({...idle,keysHeld:1,newPress:true,targetX:.7,targetY:-.4,targetZone:'right-far'},0);
  s.update({...idle,keysHeld:1,mouseDown:true,newMousePress:true,targetX:.7,targetY:-.4,targetZone:'right-far'},90);
  const pose=s.snapshot(160);assert(pose.keyboardPress>.5);assert(pose.mousePress>.5);assert.equal(pose.zone,'right-far');assert(pose.reach>0);
+});
+test('even short taps reach each of the five keyboard landings before returning',()=>{
+ for(const code of ['KeyQ','KeyA','KeyU','KeyH','Space']){
+  const target=keyTarget(code);
+  for(const pulse of [8,30,60]){
+   for(const fps of [30,60]){
+    const state=new InputState();
+    state.update({...idle,keysHeld:1,newPress:true,keyLabel:'A',
+     targetX:target.x,targetY:target.y,targetZone:target.zone},0);
+    let sawContact=false,released=false;
+    for(let time=1000/fps;time<480;time+=1000/fps){
+     if(!released&&time>=pulse){state.update(idle,pulse);released=true;}
+     const pose=state.snapshot(time);
+     if(pose.zone===target.zone&&pose.keyboardPress>.85&&Math.hypot(pose.reach-target.x,pose.depth-target.y)<.045){
+      sawContact=true;
+     }
+    }
+    assert(sawContact,`${code}, ${pulse}ms, ${fps}fps`);
+    const rest=state.snapshot(550);
+    assert(rest.keyboardPress<.01&&Math.hypot(rest.reach,rest.depth)<.01);
+   }
+  }
+ }
 });
 test('key badges are bounded, repeat is opt-in, and expired text leaves memory',()=>{
  const p=normalizePreferences(),overlay=new KeyOverlay();overlay.add(['A','B','C'],0,p);

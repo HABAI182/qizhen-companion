@@ -3,6 +3,7 @@ use crate::preferences::Preferences;
 pub const STATIC:bool=cfg!(feature="edition-static");
 pub const BASIC:bool=cfg!(feature="edition-basic")&&!STATIC;
 pub const NAME:&str=if STATIC{"static"}else if BASIC{"basic"}else{"full"};
+#[cfg(any(test, all(windows, not(feature = "native-qa"))))]
 pub const AUTOSTART_ENTRY:&str=if STATIC{"ZjuCompanionStatic"}else if BASIC{"ZjuCompanionBasic"}else{"ZjuCompanionFull"};
 pub fn action_allowed(action:&str)->bool{(!BASIC&&!STATIC)||action=="default"}
 pub fn restrict(p:&mut Preferences){

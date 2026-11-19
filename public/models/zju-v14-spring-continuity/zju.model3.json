@@ -1,0 +1,25 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "zju.moc3",
+    "Textures": [
+      "texture_00.png"
+    ],
+    "Physics": "zju.physics3.json"
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": [
+        "ParamEyeLOpen",
+        "ParamEyeROpen"
+      ]
+    }
+  ],
+  "Layout": {
+    "width": 1.92,
+    "x": -0.96,
+    "y": 0.96
+  }
+}

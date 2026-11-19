@@ -1,0 +1,218 @@
+{
+  "ok": true,
+  "availability": "AVAILABLE",
+  "root": {
+    "id": "active-model",
+    "name": "Active Model",
+    "kind": "MODEL",
+    "parentId": null,
+    "children": [
+      {
+        "id": "__RootPart__",
+        "name": "Root Part",
+        "kind": "PART",
+        "parentId": "active-model",
+        "children": [
+          {
+            "id": "ArtMesh",
+            "name": "23 \u952e\u76d8\u6c42\u662f\u9e70 [official-eagle-keyboard]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh10",
+            "name": "14 \u952e\u76d8\u4fa7\u8896\u53e3 [sleeve-keyboard]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh11",
+            "name": "13 \u9f20\u6807\u4fa7\u8896\u53e3 [sleeve-mouse]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh2",
+            "name": "22 \u9f20\u6807\u6c42\u662f\u9e70 [official-eagle-mouse]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh27",
+            "name": "01 \u8eab\u4f53\u4e0e\u9690\u85cf\u8863\u6599 [torso]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh3",
+            "name": "21 \u80f8\u524d\u5b8c\u6574\u6d59\u5927\u6821\u6807 [official-complete-bow-seal]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh6",
+            "name": "18 \u952e\u76d8\u4fa7\u624b\u638c [palm-keyboard]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh7",
+            "name": "17 \u9f20\u6807\u4fa7\u624b\u638c [palm-mouse]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh8",
+            "name": "16 \u5b8c\u6574\u952e\u76d8 [keyboard]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "ArtMesh9",
+            "name": "15 \u5b8c\u6574\u9f20\u6807 [mouse]",
+            "kind": "ART_MESH",
+            "parentId": "__RootPart__",
+            "children": []
+          },
+          {
+            "id": "RotationDeformerZJUHeadRotation",
+            "name": "ZJU Head Rotation",
+            "kind": "ROTATION_DEFORMER",
+            "parentId": "__RootPart__",
+            "children": [
+              {
+                "id": "ArtMesh12",
+                "name": "12 \u753b\u9762\u53f3\u4fa7\u7fbd\u9970 [feather-right]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh13",
+                "name": "11 \u753b\u9762\u5de6\u4fa7\u7fbd\u9970 [feather-left]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh14",
+                "name": "10 \u539f\u753b\u5634\u5f62 [mouth]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh15",
+                "name": "09R \u7709\u6bdb [brow-R]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh16",
+                "name": "08R \u95ed\u773c\u66ff\u6362 [closed-eye-R]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh17",
+                "name": "07R \u539f\u753b\u8679\u819c\u77b3\u5b54 [iris-R]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh18",
+                "name": "06R \u773c\u767d\u4e0e\u773c\u7ebf [eye-R]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh19",
+                "name": "09L \u7709\u6bdb [brow-L]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh20",
+                "name": "08L \u95ed\u773c\u66ff\u6362 [closed-eye-L]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh21",
+                "name": "07L \u539f\u753b\u8679\u819c\u77b3\u5b54 [iris-L]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh22",
+                "name": "06L \u773c\u767d\u4e0e\u773c\u7ebf [eye-L]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh23",
+                "name": "05 \u5446\u6bdb [ahoge]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh24",
+                "name": "04 \u5934\u53d1\u4e0e\u5b8c\u6574\u8138\u5e95 [head]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh25",
+                "name": "03 \u753b\u9762\u53f3\u4fa7\u540e\u53d1 [side-hair-right]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh26",
+                "name": "02 \u753b\u9762\u5de6\u4fa7\u540e\u53d1 [side-hair-left]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh4",
+                "name": "20 \u5934\u9970\u5b8c\u6574\u6d59\u5927\u6821\u6807 [official-complete-university-seal]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              },
+              {
+                "id": "ArtMesh5",
+                "name": "19 \u53d1\u5939\u6c42\u662f\u9e70 [official-eagle-hairpin]",
+                "kind": "ART_MESH",
+                "parentId": "RotationDeformerZJUHeadRotation",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "diagnosticCode": null
+}

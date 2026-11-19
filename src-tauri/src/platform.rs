@@ -5,6 +5,17 @@ use crate::preferences::Preferences;
 #[cfg(windows)]pub fn own_editor_foreground()->bool{unsafe{use windows_sys::Win32::UI::WindowsAndMessaging::*;let w=GetForegroundWindow();let mut pid=0;GetWindowThreadProcessId(w,&mut pid);pid==std::process::id()}}
 #[cfg(not(windows))]pub fn own_editor_foreground()->bool{false}
 
+#[cfg(windows)]
+pub fn primary_button()->usize{
+ use windows_sys::Win32::UI::WindowsAndMessaging::{GetSystemMetrics,SM_SWAPBUTTON};
+ if unsafe{GetSystemMetrics(SM_SWAPBUTTON)}!=0{2}else{1}
+}
+#[cfg(windows)]
+pub fn drag_button_down()->bool{
+ use windows_sys::Win32::UI::Input::KeyboardAndMouse::GetAsyncKeyState;
+ (unsafe{GetAsyncKeyState(primary_button() as i32)} as u16)&0x8000!=0
+}
+
 #[cfg(windows)]pub fn fullscreen(app:&tauri::AppHandle,p:&Preferences)->bool{unsafe{
  use windows_sys::Win32::{UI::WindowsAndMessaging::*,Foundation::{RECT,CloseHandle},System::Threading::*};
  let Some(pet)=app.get_webview_window("pet") else{return false;};let Ok(Some(m))=pet.current_monitor() else{return false;};
@@ -24,13 +35,20 @@ use crate::preferences::Preferences;
 }
 #[cfg(not(windows))]pub fn elevated_restart()->Result<(),String>{Err("当前仅支持Windows".into())}
 
-#[cfg(windows)]pub fn set_autostart(enabled:bool)->Result<(),String>{unsafe{
+#[cfg(all(windows, not(feature = "native-qa")))]pub fn set_autostart(enabled:bool)->Result<(),String>{unsafe{
  use windows_sys::Win32::{System::Registry::*,Foundation::ERROR_SUCCESS};
+ let command=if enabled{
+  let path=std::env::current_exe().map_err(|e|e.to_string())?;
+  Some(wide(&format!("\"{}\"",path.display())))
+ }else{None};
  let mut key=std::ptr::null_mut();let status=RegCreateKeyExW(HKEY_CURRENT_USER,wide("Software\\Microsoft\\Windows\\CurrentVersion\\Run").as_ptr(),0,std::ptr::null(),0,KEY_SET_VALUE,std::ptr::null(),&mut key,std::ptr::null_mut());if status!=ERROR_SUCCESS{return Err("无法更新开机启动设置".into());}
  let entry=wide(crate::edition::AUTOSTART_ENTRY);
- let result=if enabled{let path=std::env::current_exe().map_err(|e|e.to_string())?;let value=wide(&format!("\"{}\"",path.display()));RegSetValueExW(key,entry.as_ptr(),0,REG_SZ,value.as_ptr() as *const u8,(value.len()*2) as u32)}else{let code=RegDeleteValueW(key,entry.as_ptr());if code==2{ERROR_SUCCESS}else{code}};
+ let result=if let Some(value)=command{RegSetValueExW(key,entry.as_ptr(),0,REG_SZ,value.as_ptr() as *const u8,(value.len()*2) as u32)}else{let code=RegDeleteValueW(key,entry.as_ptr());if code==2{ERROR_SUCCESS}else{code}};
  RegCloseKey(key);if result!=ERROR_SUCCESS{return Err("开机启动设置未保存".into());}Ok(())
 }}
+#[cfg(all(windows, feature = "native-qa"))]pub fn set_autostart(enabled:bool)->Result<(),String>{
+ if enabled{Err("实机验收构建不能写入开机启动".into())}else{Ok(())}
+}
 #[cfg(not(windows))]pub fn set_autostart(_:bool)->Result<(),String>{Err("当前仅支持Windows".into())}
 
 pub fn controller()->Option<(u16,i16,i16)>{

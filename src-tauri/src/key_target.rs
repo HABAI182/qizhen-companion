@@ -1,11 +1,11 @@
 //! Fixed physical VK map. No text or input history; only current held ordering.
 #[derive(Clone,Copy,Debug,PartialEq)]pub struct Target {pub x:f32,pub y:f32,pub zone:&'static str}
 pub fn target(k:usize)->Target{
- if k==32{return Target{x:-0.25,y:0.,zone:"space"};}
+ if k==32{return Target{x:-0.38,y:0.,zone:"space"};}
  let left=matches!(k,49..=53|65..=71|81..=84|86|87|88|90|91|160|162|164|9|20|27|192|112..=116);
  let near=matches!(k,65|83|68|70|71|72|74..=76|90|88|67|86|66|78|77|13|20|160..=165|91..=93|186|188..=191|222|35|34|37|39|40|45|46|96..=102|107|110|19|44|145);
  let zone=match (left,near){(true,false)=>"left-far",(false,false)=>"right-far",(true,true)=>"left-near",(false,true)=>"right-near"};
- Target{x:if left{0.65}else{-0.85},y:if near{0.35}else{1.},zone}
+ Target{x:if left{0.73}else{-0.88},y:if near{0.35}else{1.},zone}
 }
 pub fn update_order(order:&mut Vec<usize>,held:&[bool;256],pressed:&[usize])->Option<usize>{
  order.retain(|k|held[*k]);

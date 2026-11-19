@@ -27,7 +27,8 @@ async function main(){
  const disc=await sharp(cut(irisRaw,discMask),{raw:{width:W,height:H,channels:4}}).extract(discBounds).png().toBuffer();
  const eyes=[],registrations=[];
  const fringe=colorMask(cleanPlate,(r,g,b)=>b>r+8||Math.max(r,g,b)<130&&b>r-8?1:0,eyeRegions);
- const fringeExpanded=await sharp(fringe,{raw:{width:W,height:H,channels:1}}).dilate(1).raw().toBuffer();
+ const fringeExpanded=await sharp(fringe,{raw:{width:W,height:H,channels:1}}).dilate(1).greyscale().raw().toBuffer();
+ assert.equal(fringeExpanded.length,N,'Morphology output must retain one channel');
  function sourceInk(art,shape){const result=Buffer.alloc(N*4);for(let i=0;i<N;i++){if(!shape[i]||fringeExpanded[i]>100)continue;const j=i*4,maximum=Math.max(art[j],art[j+1],art[j+2]);const a=Math.max(0,Math.min(1,(230-maximum)/70));if(a<.08)continue;for(let c=0;c<3;c++)result[j+c]=Math.max(0,Math.min(255,Math.round((art[j+c]-(1-a)*cleanPlate[j+c])/a)));result[j+3]=Math.round(a*shape[i]);}return result;}
  async function registerInk(raw,region,targetBounds,label){
   const selected=largestComponent(intersect(alpha(raw),region)),from=bounds(selected,1,8),to={left:targetBounds[0],top:targetBounds[1],width:targetBounds[2],height:targetBounds[3]};
@@ -55,7 +56,9 @@ async function main(){
   const generatedUpper=await registerInk(openInk,genUpper,spec.inkBounds.upper,spec.side+' upper');
   const generatedLower=await registerInk(openInk,genLower,spec.inkBounds.lower,spec.side+' lower');
   const generatedClosed=await registerInk(closedInk,genClosed,spec.inkBounds.closed,spec.side+' closed');
-  const upper=over(cut(generatedUpper,fringe),sourceInk(source,subtract(upperShape,aperture)));
+  // The traced upper stroke owns its inner antialiased edge. Subtracting the
+  // aperture here cut that edge away and exposed a thin white seam.
+  const upper=over(cut(generatedUpper,fringe),sourceInk(source,upperShape));
   const lower=sourceInk(source,intersect(lowerBand,region));
   const cb=spec.inkBounds.closed,closedRegion=await mask(`M${cb[0]} ${cb[1]}h${cb[2]}v${cb[3]}h-${cb[2]}Z`);
   const closedLine=over(cut(generatedClosed,fringe),sourceInk(closed,closedRegion));
