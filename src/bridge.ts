@@ -3,7 +3,7 @@ import {listen} from '@tauri-apps/api/event';
 import {normalizePreferences, applyTheme} from './preferences.mjs';
 
 export const desktop=Boolean((window as any).__TAURI_INTERNALS__);
-export type Preferences=Omit<ReturnType<typeof normalizePreferences>,'motion'|'inputMode'> & {motion:'full'|'low'|'off',inputMode:'keyboard_mouse'|'keyboard_only'};
+export type Preferences=Omit<ReturnType<typeof normalizePreferences>,'motion'|'inputMode'|'inputEnabled'> & {motion:'full'|'low'|'off',inputMode:'keyboard_mouse'|'keyboard_only',inputEnabled:boolean};
 export let prefs:Preferences=normalizePreferences();
 const storageKey='zju-companion-preferences-v1';
 const observers=new Set<(p:Preferences)=>void>();

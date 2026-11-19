@@ -14,6 +14,12 @@ const shaders='/vendor/live2d/shaders/';
 const image=(url:string)=>new Promise<HTMLImageElement>((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(new Error('贴图读取失败'));im.src=url;});
 let ready=false;
 const clamp=(v:number,min:number,max:number)=>Math.max(min,Math.min(max,v));
+const referenceEdge = 1254;
+const bufferBucket = 64;
+const minimumEdge = 256;
+const displaySupersampling = 1.25;
+type ColorBuffer = 'reference' | 'adaptive';
+
 export class CubismNativeRenderer {
  readonly mode='cubism-native';
  private gl!:WebGLRenderingContext;private moc!:CubismMoc;private model!:CubismModel;
@@ -23,7 +29,47 @@ export class CubismNativeRenderer {
  private motion=new PetMotion();
  private physics?:CubismPhysics;
  private physicsRunning=false;
- constructor(readonly canvas:HTMLCanvasElement,private entry=modelEntry){}
+ private viewport = [0, 0, referenceEdge, referenceEdge];
+ private sizeObserver?: ResizeObserver;
+ private cssEdge = 0;
+ private sizeChanged = true;
+ private lastDpr = 0;
+ constructor(readonly canvas:HTMLCanvasElement,private entry=modelEntry,private readonly colorBuffer:ColorBuffer='reference'){}
+
+ private observeDisplaySize() {
+  const update = (width:number, height:number) => {
+   const edge = Math.min(width, height);
+   if (Number.isFinite(edge) && edge > 0 && edge !== this.cssEdge) {
+    this.cssEdge = edge;
+    this.sizeChanged = true;
+   }
+  };
+  const rect = this.canvas.getBoundingClientRect();
+  update(rect.width, rect.height);
+  this.sizeObserver = new ResizeObserver(([entry]) => {
+   update(entry.contentRect.width, entry.contentRect.height);
+  });
+  this.sizeObserver.observe(this.canvas);
+ }
+
+ private fitColorBuffer() {
+  let edge = referenceEdge;
+  if (this.colorBuffer === 'adaptive') {
+   const dpr = window.devicePixelRatio || 1;
+   if (!this.sizeChanged && dpr === this.lastDpr) return;
+   this.sizeChanged = false;
+   this.lastDpr = dpr;
+   if (this.cssEdge > 0) {
+    const requested = this.cssEdge * dpr * displaySupersampling;
+    edge = clamp(Math.ceil(requested / bufferBucket) * bufferBucket, minimumEdge, referenceEdge);
+   }
+  }
+  if (this.canvas.width !== edge) this.canvas.width = edge;
+  if (this.canvas.height !== edge) this.canvas.height = edge;
+  this.viewport[2] = edge;
+  this.viewport[3] = edge;
+ }
+
  async load(){
   if(typeof Live2DCubismCore==='undefined')await new Promise<void>((resolve,reject)=>{const el=document.createElement('script');el.src='/vendor/live2d/live2dcubismcore.min.js';el.onload=()=>resolve();el.onerror=()=>reject(new Error('Live2D Core 读取失败'));document.head.append(el);});
   if(!ready){if(!CubismFramework.startUp())throw new Error('Live2D 初始化失败');CubismFramework.initialize();ready=true;}
@@ -35,7 +81,8 @@ export class CubismNativeRenderer {
   this.moc=CubismMoc.create(data,true);if(!this.moc)throw new Error('MOC3 无法载入');this.model=this.moc.createModel();if(!this.model)throw new Error('模型无法创建');
   for(let i=0;i<this.model.getParameterCount();i++)this.indices.set(this.model.getParameterId(i).getString(),i);
   for(const id of ['ParamEyeLOpen','ParamEyeROpen','ParamEyeBallX','ParamEyeBallY','ParamAngleX','ParamAngleY','ParamAngleZ','ParamHandLPress','ParamHandRPress','ParamHandLX','ParamHandLY','ParamHandRX','ParamHandRY'])if(!this.indices.has(id))throw new Error('模型缺少参数 '+id);
-  this.canvas.width=1254;this.canvas.height=1254;
+  if(this.colorBuffer==='adaptive')this.observeDisplaySize();
+  this.fitColorBuffer();
   const gl=this.canvas.getContext('webgl',{alpha:true,premultipliedAlpha:true,preserveDrawingBuffer:true});if(!gl)throw new Error('WebGL 不可用');this.gl=gl;
   this.model.saveParameters();this.matrix=new CubismModelMatrix(this.model.getCanvasWidth(),this.model.getCanvasHeight());
   this.matrix.setupFromLayout(new Map(Object.entries(manifest.Layout||{}) as [string,number][]));
@@ -46,7 +93,7 @@ export class CubismNativeRenderer {
    this.physics=CubismPhysics.create(physics,physics.byteLength);
    this.physics.stabilization(this.model);
   }
-  this.renderer=new CubismRenderer_WebGL(1254,1254);this.renderer.initialize(this.model);this.renderer.setClippingMaskBufferSize(1024);this.renderer.startUp(gl);this.renderer.setIsPremultipliedAlpha(true);this.renderer.loadShaders(shaders);
+  this.renderer=new CubismRenderer_WebGL(this.canvas.width,this.canvas.height);this.renderer.initialize(this.model);this.renderer.setClippingMaskBufferSize(1024);this.renderer.startUp(gl);this.renderer.setIsPremultipliedAlpha(true);this.renderer.loadShaders(shaders);
   for(const [i,file] of manifest.FileReferences.Textures.entries()){
    const im=await image(local(file)),tex=gl.createTexture()!;gl.bindTexture(gl.TEXTURE_2D,tex);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,1);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,im);this.textures.push(tex);this.renderer.bindTexture(i,tex);
   }
@@ -61,9 +108,10 @@ export class CubismNativeRenderer {
   this.render();
  }
  private render(){
+  if(this.colorBuffer==='adaptive')this.fitColorBuffer();
   this.model.update();
-  const gl=this.gl;gl.viewport(0,0,1254,1254);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
-  const matrix=new CubismMatrix44();matrix.multiplyByMatrix(this.matrix);this.renderer.setMvpMatrix(matrix);this.renderer.setRenderState(null as unknown as WebGLFramebuffer,[0,0,1254,1254]);this.renderer.drawModel(shaders);
+  const gl=this.gl;this.renderer.setRenderState(null as unknown as WebGLFramebuffer,this.viewport);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+  const matrix=new CubismMatrix44();matrix.multiplyByMatrix(this.matrix);this.renderer.setMvpMatrix(matrix);this.renderer.drawModel(shaders);
  }
  draw(now:number,s:Snapshot,o:FrameOptions){
   const {dt,values}=this.motion.step(now,s,o);
@@ -92,7 +140,7 @@ export class CubismNativeRenderer {
    meshes[id]=hash>>>0;opacity[id]=this.model.getDrawableOpacity(i);bounds[id]=[x0,y0,x1,y1];
    if(counts[i])clipping[id]=Array.from(masks[i]).slice(0,counts[i]).map(j=>this.model.getDrawableId(j).getString());
   }
-  return {mode:this.mode,coreConsistency:this.consistent,mocVersion:this.moc.getMocVersion(),drawables:this.model.getDrawableCount(),parameters,meshes,opacity,clipping,bounds,physicsLoaded:Boolean(this.physics),width:1254,height:1254};
+  return {mode:this.mode,coreConsistency:this.consistent,mocVersion:this.moc.getMocVersion(),drawables:this.model.getDrawableCount(),parameters,meshes,opacity,clipping,bounds,physicsLoaded:Boolean(this.physics),width:this.canvas.width,height:this.canvas.height,maskEdge:this.renderer.getClippingMaskBufferSize()};
  }
- dispose(){if(this.physics)CubismPhysics.delete(this.physics);this.renderer?.release();for(const tex of this.textures)this.gl.deleteTexture(tex);if(this.model)this.moc.deleteModel(this.model);this.moc?.release();}
+ dispose(){this.sizeObserver?.disconnect();if(this.physics)CubismPhysics.delete(this.physics);this.renderer?.release();for(const tex of this.textures)this.gl.deleteTexture(tex);if(this.model)this.moc.deleteModel(this.model);this.moc?.release();}
 }

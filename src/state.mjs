@@ -2,7 +2,7 @@ import {Spring} from './key-target.mjs';
 export class InputState {
  keyboardHeld=false;mouseHeld=false;keyboardStarted=-Infinity;mouseStarted=-Infinity;
  reach=0;depth=0;zone='rest';label='';labelUntil=0;last=null;speed=1;
- keyboardVisibleUntil=-Infinity;keyboardContactAt=-Infinity;
+ keyboardVisibleUntil=-Infinity;keyboardContactAt=-Infinity;mouseVisibleUntil=-Infinity;
  springs={key:new Spring(),mouse:new Spring(),x:new Spring(),y:new Spring(),keyHead:new Spring(),mouseHead:new Spring()};
  advance(now,speed=1){
   if(this.last===null){this.last=now;return;}
@@ -21,7 +21,9 @@ export class InputState {
   this.springs.key.step(0,release,36*speed,.73);
   this.springs.x.step(0,release,23*speed,.74);
   this.springs.y.step(0,release,23*speed,.74);
-  this.springs.mouse.step(this.mouseHeld?1:0,dt,27*speed,.47);
+  const mouseActive=this.mouseHeld?elapsed:Math.max(0,Math.min(elapsed,this.mouseVisibleUntil-start));
+  this.springs.mouse.step(1,mouseActive/1000,34*speed,.74);
+  this.springs.mouse.step(0,(elapsed-mouseActive)/1000,33*speed,.76);
   this.springs.keyHead.step(0,dt,18*speed,.34);
   this.springs.mouseHead.step(0,dt,18*speed,.34);
  }
@@ -39,7 +41,7 @@ export class InputState {
    this.reach=x;this.depth=y;this.zone=frame.targetZone??'left-near';
   }
   if(frame.newPress){this.keyboardStarted=now;this.springs.keyHead.kick(27);this.label=frame.keyLabel;this.labelUntil=now+900;}
-  if(frame.newMousePress){this.mouseStarted=now;this.springs.mouse.kick(6);this.springs.mouseHead.kick(16);}
+  if(frame.newMousePress){this.mouseStarted=now;this.mouseVisibleUntil=now+92/this.speed;this.springs.mouse.kick(6);this.springs.mouseHead.kick(16);}
   // Short taps already rebound through the spring. A held key adds a smaller release beat.
   if(keyReleased)this.springs.keyHead.kick(-9*Math.max(0,Math.min(1,(now-this.keyboardStarted-35)/60)));
   if(mouseReleased&&Number.isFinite(this.mouseStarted))this.springs.mouseHead.kick(-6*Math.max(0,Math.min(1,(now-this.mouseStarted-30)/70)));

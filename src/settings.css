@@ -1,0 +1,583 @@
+:root {
+  --settings-bg: #f1f6fc;
+  --settings-card: #fff;
+  --settings-field: #f5f9fe;
+  --settings-border: #d8e4f1;
+  --settings-text: #203953;
+  --settings-muted: #536b84;
+  --settings-accent: var(--accent);
+  --settings-error: #a1362c;
+  --settings-scheme: light;
+  --settings-row-pad: 11px;
+  --settings-gap: 14px;
+}
+
+:root[data-theme=dark] {
+  --settings-bg: #111e2d;
+  --settings-card: #192a3e;
+  --settings-field: #233850;
+  --settings-border: #37516c;
+  --settings-text: #edf5ff;
+  --settings-muted: #a9bfd7;
+  --settings-accent: color-mix(in srgb, var(--accent), #e9f4ff 63%);
+  --settings-error: #ffb9a8;
+  --settings-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme=system] {
+    --settings-bg: #111e2d;
+    --settings-card: #192a3e;
+    --settings-field: #233850;
+    --settings-border: #37516c;
+    --settings-text: #edf5ff;
+    --settings-muted: #a9bfd7;
+    --settings-accent: color-mix(in srgb, var(--accent), #e9f4ff 63%);
+    --settings-error: #ffb9a8;
+    --settings-scheme: dark;
+  }
+}
+
+:root[data-density=compact] {
+  --settings-row-pad: 7px;
+  --settings-gap: 10px;
+}
+
+.settings-page,
+.menu-page {
+  background: var(--settings-bg);
+  color: var(--settings-text);
+  color-scheme: var(--settings-scheme);
+}
+
+.settings-page {
+  overflow: hidden;
+}
+
+.settings-shell,
+.interaction-menu {
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.45;
+}
+
+.settings-shell {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
+  --panel-padding: clamp(12px, 4vw, 26px);
+  --content-width: 690px;
+}
+
+.settings-title,
+.settings-footer {
+  padding-inline: var(--panel-padding);
+  background: var(--settings-card);
+}
+
+.settings-title {
+  padding-block: 15px 11px;
+  border-block-end: 1px solid var(--settings-border);
+}
+
+.settings-title h1 {
+  margin: 0 auto 12px;
+  max-width: var(--content-width);
+  font-size: 1.5em;
+  font-weight: 650;
+}
+
+.settings-title .tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding: 3px;
+  border: 1px solid var(--settings-border);
+  border-radius: 12px;
+  background: var(--settings-field);
+}
+
+.settings-title .tabs:has(button[hidden]) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.settings-title .tabs button {
+  min-width: 0;
+  padding: 7px 3px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--settings-muted);
+  white-space: nowrap;
+}
+
+.settings-title .tabs button[aria-selected=true] {
+  border-color: var(--settings-border);
+  background: var(--settings-card);
+  color: var(--settings-accent);
+  font-weight: 650;
+}
+
+.settings-content {
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable both-edges;
+  padding: var(--settings-gap) var(--panel-padding);
+}
+
+[data-panel] {
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+.settings-card {
+  padding: 15px clamp(12px, 3.6vw, 21px);
+  border: 1px solid var(--settings-border);
+  border-radius: 14px;
+  background: var(--settings-card);
+}
+
+.settings-card + .settings-card {
+  margin-top: var(--settings-gap);
+}
+
+.settings-card h2,
+.settings-shell dialog h2 {
+  margin: 0 0 7px;
+  font-size: 1.13em;
+  font-weight: 650;
+}
+
+.settings-shell .setting-row,
+.settings-shell .range-row,
+.settings-shell .field-stack {
+  display: block;
+  padding: var(--settings-row-pad) 0;
+  border-block-end: 1px solid var(--settings-border);
+}
+
+.settings-shell .setting-row,
+.settings-shell .range-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-shell :is(.setting-row, .range-row, .field-stack):last-child {
+  border-block-end: 0;
+}
+
+.settings-shell strong {
+  font-weight: 550;
+}
+
+.settings-shell small {
+  display: block;
+  margin-top: 3px;
+  color: var(--settings-muted);
+  font-size: .85em;
+  line-height: 1.45;
+}
+
+.settings-shell .range-top {
+  margin-bottom: 5px;
+}
+
+.settings-shell output {
+  min-width: 3.4em;
+  padding: 3px 6px;
+  border-radius: 6px;
+  background: var(--settings-field);
+  color: var(--settings-accent);
+  font-size: .87em;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.settings-shell input[type=range] {
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--settings-accent);
+  cursor: pointer;
+}
+
+.settings-shell input[type=checkbox] {
+  accent-color: var(--settings-accent);
+}
+
+.settings-shell .setting-row input[type=checkbox] {
+  position: relative;
+  appearance: none;
+  flex: 0 0 39px;
+  width: 39px;
+  height: 23px;
+  margin: 0;
+  border: 1px solid #b7c7d9;
+  border-radius: 16px;
+  background: var(--settings-border);
+  cursor: pointer;
+}
+
+.settings-shell .setting-row input[type=checkbox]::after {
+  content: "";
+  position: absolute;
+  inset: 2px auto auto 2px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--settings-card);
+  box-shadow: 0 1px 2px #00264b47;
+}
+
+.settings-shell .setting-row input[type=checkbox]:checked {
+  border-color: var(--settings-accent);
+  background: var(--settings-accent);
+}
+
+.settings-shell .setting-row input[type=checkbox]:checked::after {
+  inset-inline-start: 18px;
+}
+
+.settings-shell :is(select, input:not([type]), textarea, .secondary),
+.interaction-menu button {
+  min-width: 0;
+  padding: .48em .65em;
+  border: 1px solid var(--settings-border);
+  border-radius: 8px;
+  background: var(--settings-field);
+  color: var(--settings-text);
+  font: inherit;
+}
+
+.settings-shell .secondary,
+.interaction-menu .secondary {
+  font-size: .9em;
+}
+
+.settings-shell .setting-row select {
+  max-width: 55%;
+}
+
+.settings-shell :is(button, input, select, textarea, summary):focus-visible,
+.interaction-menu button:focus-visible,
+[data-panel]:focus-visible {
+  outline: 2px solid var(--settings-accent);
+  outline-offset: 2px;
+}
+
+.settings-shell :disabled,
+.interaction-menu :disabled {
+  opacity: .53;
+  cursor: default;
+}
+
+.settings-shell .button-row {
+  margin-top: var(--settings-gap);
+}
+
+.settings-disclosure summary {
+  padding-block: 10px;
+  color: var(--settings-accent);
+  cursor: pointer;
+  user-select: none;
+}
+
+.settings-disclosure[open] summary {
+  border-block-end: 1px solid var(--settings-border);
+}
+
+.field-stack textarea {
+  display: block;
+  width: 100%;
+  min-height: 3em;
+  margin-top: 7px;
+  resize: vertical;
+}
+
+.settings-shell #testSound,
+.settings-shell #saveShortcuts {
+  margin-top: 8px;
+}
+
+.position-slot,
+.shortcut-row {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-block-end: 1px solid var(--settings-border);
+}
+
+.position-slot:last-child,
+.shortcut-row:last-child {
+  border-block-end: 0;
+}
+
+.position-slot {
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+}
+
+.shortcut-row {
+  grid-template-columns: minmax(5em, auto) minmax(0, 1fr) minmax(5em, .85fr);
+}
+
+.shortcut-row label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.position-slot span,
+.settings-help,
+.runtime-status,
+.settings-shell .version {
+  color: var(--settings-muted);
+  font-size: .88em;
+}
+
+.settings-shell .version {
+  margin: .55em 0 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.overlay-example {
+  margin: 11px 0 4px;
+  border: 1px solid var(--settings-border);
+  border-radius: 10px;
+  background: var(--settings-field);
+}
+
+.example-stage {
+  position: relative;
+  height: 106px;
+  max-width: 340px;
+  margin-inline: auto;
+}
+
+.example-stage i {
+  position: absolute;
+  inset: 39% 28% 11%;
+  border: 1px solid var(--settings-border);
+  border-radius: 48% 48% 18% 18%;
+  background: color-mix(in srgb, var(--settings-field), var(--settings-accent) 10%);
+}
+
+.example-key,
+.example-speech {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: var(--overlay-top, 13%);
+  padding: .29em .52em;
+  border: 1px solid #7595bb;
+  border-block-end: 2px solid #567ca9;
+  border-radius: 7px;
+  background: linear-gradient(145deg, #fffdf8, #ecf4ff);
+  color: #24446b;
+  box-shadow: 0 1px 3px #092f5b21;
+  white-space: nowrap;
+}
+
+.example-key {
+  inset-inline-end: 8%;
+  font: 600 calc(11px * var(--key-bubble-scale, 1)) "Segoe UI", sans-serif;
+}
+
+.example-speech {
+  inset-inline-start: 8%;
+  font-size: calc(12px * var(--speech-bubble-scale, 1));
+}
+
+:root[data-overlay-order=swapped] .example-key {
+  inset-inline: 8% auto;
+}
+
+:root[data-overlay-order=swapped] .example-speech {
+  inset-inline: auto 8%;
+}
+
+.example-off {
+  display: block;
+  padding-top: 12px;
+  color: var(--settings-muted);
+  font-size: .85em;
+  text-align: center;
+}
+
+.settings-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7px 10px;
+  min-height: 47px;
+  padding-block: 8px;
+  border-block-start: 1px solid var(--settings-border);
+  color: var(--settings-muted);
+}
+
+.settings-status {
+  flex: 1 1 120px;
+  min-width: 0;
+  font-size: .87em;
+}
+
+.settings-footer-actions {
+  display: flex;
+  gap: 6px;
+  margin-inline-start: auto;
+}
+
+.settings-status #notice,
+.interaction-menu #notice {
+  margin: 2px 0 0;
+  color: var(--settings-error);
+  font-size: .92em;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.settings-shell dialog {
+  width: min(340px, calc(100% - 26px));
+  padding: 18px;
+  border: 1px solid var(--settings-border);
+  border-radius: 14px;
+  background: var(--settings-card);
+  color: var(--settings-text);
+}
+
+.settings-shell dialog::backdrop {
+  background: #14253a66;
+}
+
+.settings-shell dialog p {
+  margin: 8px 0;
+  color: var(--settings-muted);
+}
+
+.settings-shell dialog .button-row {
+  justify-content: flex-end;
+}
+
+.settings-shell dialog .primary {
+  padding: .45em .7em;
+  border: 1px solid var(--settings-accent);
+  border-radius: 8px;
+  background: var(--settings-accent);
+  color: var(--settings-card);
+  font-size: .9em;
+}
+
+.menu-page {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.interaction-menu {
+  display: grid;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid var(--settings-border);
+  background: var(--settings-card);
+}
+
+.interaction-menu header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 34px;
+  touch-action: none;
+  user-select: none;
+}
+
+.menu-page[data-native] .interaction-menu header {
+  cursor: grab;
+}
+
+.menu-page[data-native] .interaction-menu header.dragging {
+  cursor: grabbing;
+}
+
+.interaction-menu h1 {
+  margin: 0;
+  font-size: 1.21em;
+  font-weight: 650;
+}
+
+.interaction-menu .icon-button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-color: transparent;
+  background: transparent;
+  color: var(--settings-muted);
+}
+
+.interaction-menu .action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.interaction-menu .action-grid button {
+  min-height: 35px;
+  color: var(--settings-accent);
+}
+
+.interaction-menu .wide-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-height: 35px;
+  text-align: start;
+}
+
+.interaction-menu .menu-options {
+  display: grid;
+  gap: 6px;
+}
+
+.interaction-menu .menu-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--settings-border);
+}
+
+.interaction-menu button:hover,
+.settings-shell .secondary:not(:disabled):hover,
+.settings-title .tabs button:hover {
+  background: color-mix(in srgb, var(--settings-field), var(--settings-accent) 10%);
+}
+
+@media (max-width: 395px) {
+  .settings-content {
+    scrollbar-gutter: stable;
+  }
+
+  .shortcut-row {
+    grid-template-columns: 5em minmax(0, 1fr);
+  }
+
+  .shortcut-row select {
+    grid-column: 2;
+  }
+}
+
+@media (max-height: 470px) {
+  .settings-title {
+    padding-block: 9px;
+  }
+
+  .settings-title h1 {
+    margin-bottom: 7px;
+    font-size: 1.24em;
+  }
+}

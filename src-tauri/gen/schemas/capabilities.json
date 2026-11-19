@@ -1,1 +1,1 @@
-{"local-companion":{"identifier":"local-companion","description":"本地桌宠及设置窗口的最小窗口操作权限","local":true,"windows":["pet","settings","menu"],"permissions":["core:default","core:window:allow-start-dragging"]}}
+{"local-companion":{"identifier":"local-companion","description":"本地桌宠及设置窗口的最小窗口操作权限","local":true,"windows":["pet","settings","menu"],"permissions":["core:default"]}}

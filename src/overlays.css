@@ -1,0 +1,174 @@
+.pet-overlays {
+  position: absolute;
+  z-index: 2;
+  inset: var(--overlay-top, 13%) 3.4% auto 2.8%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4%;
+  pointer-events: none;
+  user-select: none;
+}
+
+:root[data-overlay-order='swapped'] .pet-overlays {
+  flex-direction: row-reverse;
+}
+
+.pet-shell .pet-overlays .speech-bubble,
+.pet-shell .pet-overlays .key-bubbles {
+  position: relative;
+  z-index: auto;
+  inset: auto;
+  flex: 0 1 auto;
+  min-inline-size: 0;
+  pointer-events: none;
+}
+
+.pet-overlays .speech-bubble,
+.pet-overlays .key-bubbles kbd {
+  color: #24446b;
+  background: linear-gradient(145deg, #fffdf8f7, #ecf4fffa);
+  border: 1px solid #7595bb;
+  border-block-end: 2px solid #567ca9;
+  box-shadow: inset 0 0 0 1px #ffffffcc, 0 2px 6px #122e5129;
+}
+
+.pet-shell .pet-overlays .speech-bubble {
+  inline-size: max-content;
+  max-inline-size: 49%;
+  padding: .4em .4em;
+  border-radius: .78em .78em .38em .78em;
+  font-size: clamp(9.5px, calc(clamp(9.5px, 3.2cqw, 22px) * var(--speech-bubble-scale, 1)), 4.55cqw);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 180ms ease-out, transform 180ms ease-out;
+}
+
+.pet-shell .pet-overlays .speech-bubble.shown {
+  opacity: 1;
+  transform: none;
+}
+
+.pet-shell .pet-overlays .speech-bubble::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: auto;
+  inset-inline-end: .65em;
+  inset-block-end: -.29em;
+  inline-size: .4em;
+  block-size: .4em;
+  transform: rotate(45deg);
+  background: #edf5ff;
+  border-inline-start: 0;
+  border-inline-end: 1px solid #7595bb;
+  border-block-end: 2px solid #567ca9;
+}
+
+:root[data-overlay-order='swapped'] .pet-overlays .speech-bubble {
+  border-radius: .78em .78em .78em .38em;
+}
+
+:root[data-overlay-order='swapped'] .pet-overlays .speech-bubble::after {
+  inset-inline-start: .65em;
+  inset-inline-end: auto;
+  border-inline-start: 1px solid #7595bb;
+  border-inline-end: 0;
+  transform: rotate(-45deg);
+}
+
+.pet-shell .pet-overlays .key-bubbles {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: .24em;
+  inline-size: max-content;
+  max-inline-size: 46%;
+  font-size: clamp(10px, calc(clamp(8px, 3.2cqw, 22px) * var(--key-bubble-scale, 1.3)), 6.8cqw);
+}
+
+:root[data-overlay-order='swapped'] .pet-overlays .key-bubbles {
+  justify-content: flex-start;
+}
+
+.pet-overlays .key-bubbles kbd {
+  min-inline-size: 1.95em;
+  max-inline-size: 100%;
+  padding: .31em .46em;
+  border-radius: .52em;
+  font: 650 1em/1.2 "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: key-badge-appear 140ms cubic-bezier(.2, .85, .35, 1) both;
+}
+
+.pet-overlays .key-label-compact {
+  display: none;
+}
+
+.pet-shell .pet-overlays .key-bubbles:has(> kbd:nth-child(2)) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: .16em;
+  inline-size: min(30%, 9.2em);
+  max-inline-size: none;
+  font-size: clamp(8px, calc(clamp(8px, 2.5cqw, 15px) * var(--key-bubble-scale, 1.3)), 4.3cqw);
+}
+
+.pet-shell .pet-overlays .key-bubbles:has(> kbd:nth-child(3)) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  inline-size: min(46%, 13.8em);
+}
+
+.pet-overlays .key-bubbles:has(> kbd:nth-child(2)) kbd {
+  min-inline-size: 0;
+  padding: .17em .08em;
+}
+
+.pet-overlays .key-bubbles:has(> kbd:nth-child(2)) .key-label {
+  display: none;
+}
+
+.pet-overlays .key-bubbles:has(> kbd:nth-child(2)) .key-label-compact {
+  display: inline;
+  font-size: .94em;
+  letter-spacing: -.015em;
+}
+
+@container (max-width: 260px) {
+  .pet-shell .pet-overlays .speech-bubble {
+    padding-inline: .39em;
+  }
+
+  .pet-overlays .key-bubbles .key-label {
+    display: none;
+  }
+
+  .pet-overlays .key-bubbles .key-label-compact {
+    display: inline;
+  }
+}
+
+@keyframes key-badge-appear {
+  from {
+    opacity: 0;
+    transform: translateY(2px) scale(.93);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pet-shell .pet-overlays .speech-bubble {
+    transition: none;
+    transform: none;
+  }
+
+  .pet-overlays .key-bubbles kbd {
+    animation: none;
+  }
+}

@@ -6,6 +6,14 @@ use crate::preferences::Preferences;
 #[cfg(not(windows))]pub fn own_editor_foreground()->bool{false}
 
 #[cfg(windows)]
+pub fn window_rect(handle:usize)->Option<crate::window_layout::Rect>{
+ use windows_sys::Win32::{Foundation::RECT,UI::WindowsAndMessaging::GetWindowRect};
+ let mut r=RECT{left:0,top:0,right:0,bottom:0};
+ if unsafe{GetWindowRect(handle as _,&mut r)}==0||r.right<=r.left||r.bottom<=r.top{return None;}
+ Some(crate::window_layout::Rect{x:r.left,y:r.top,width:r.right-r.left,height:r.bottom-r.top})
+}
+
+#[cfg(windows)]
 pub fn primary_button()->usize{
  use windows_sys::Win32::UI::WindowsAndMessaging::{GetSystemMetrics,SM_SWAPBUTTON};
  if unsafe{GetSystemMetrics(SM_SWAPBUTTON)}!=0{2}else{1}

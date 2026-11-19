@@ -1,27 +1,39 @@
 import {
  call,desktop,escapeHtml,onPreferences,prefs,updatePreferences,sendAction,notify,type Preferences,
 } from './bridge';
-import {expressions,motions,normalizeActionChord,validExceptionName} from './preferences.mjs';
+import {expressions,motions,normalizeActionChord,normalizePreferences,validExceptionName} from './preferences.mjs';
 import {version} from '../package.json';
+import {bindWindowDrag} from './window-drag';
+import './settings.css';
 
 type Control=HTMLInputElement|HTMLSelectElement;
 type Metrics={edition:string;keyboardHookActive:boolean;gamepadConnected:boolean};
 
 const button=(id:string,label:string)=>`<button id="${id}" type="button" class="secondary">${label}</button>`;
-const details=(description:string)=>description?`<small>${description}</small>`:'';
+const details=(key:string,description:string)=>description?`<small id="${key}Help">${description}</small>`:'';
+const controlAttrs=(key:string,description:string)=>
+ `id="pref-${key}" data-pref="${key}" aria-labelledby="${key}Label"${description?` aria-describedby="${key}Help"`:''}`;
+const controlLabel=(key:string,label:string,description:string)=>
+ `<span><strong id="${key}Label">${label}</strong>${details(key,description)}</span>`;
 const toggle=(key:string,label:string,description='')=>
- `<label class="setting-row"><span><strong>${label}</strong>${details(description)}</span><input type="checkbox" data-pref="${key}"></label>`;
+ `<label class="setting-row">${controlLabel(key,label,description)}<input type="checkbox" ${controlAttrs(key,description)}></label>`;
 const range=(key:string,label:string,min:number,max:number,step=.05,unit='%',description='')=>
- `<label class="range-row"><span class="range-top"><span><strong>${label}</strong>${details(description)}</span><output id="${key}Value"></output></span><input type="range" data-pref="${key}" data-unit="${unit}" min="${min}" max="${max}" step="${step}"></label>`;
+ `<label class="range-row"><span class="range-top">${controlLabel(key,label,description)}<output id="${key}Value" for="pref-${key}"></output></span><input type="range" ${controlAttrs(key,description)} data-unit="${unit}" min="${min}" max="${max}" step="${step}"></label>`;
 const select=(key:string,label:string,options:ReadonlyArray<readonly [string|number,string]>,description='')=>
- `<label class="setting-row"><span><strong>${label}</strong>${details(description)}</span><select data-pref="${key}">${options.map(([value,text])=>`<option value="${value}">${text}</option>`).join('')}</select></label>`;
+ `<label class="setting-row">${controlLabel(key,label,description)}<select ${controlAttrs(key,description)}>${options.map(([value,text])=>`<option value="${value}">${text}</option>`).join('')}</select></label>`;
 const group=(label:string,body:string,attributes='')=>
  `<section class="settings-card" ${attributes}><h2>${label}</h2>${body}</section>`;
+const disclosure=(id:string,label:string,body:string)=>
+ `<details id="${id}" class="settings-disclosure"><summary>${label}</summary>${body}</details>`;
 
-const tabs=[['appearance','外观'],['interaction','互动'],['desktop','桌面'],['advanced','高级']];
+const tabs=[['appearance','外观'],['interaction','互动'],['desktop','桌面'],['advanced','高级']] as const;
+type TabId=(typeof tabs)[number][0];
 const nativeFields=new Set(['gamepadEnabled','sfxEnabled','sfxVolume','alwaysOnTop','clickThrough','edgeSnap','fullscreenHide','autostart']);
 const companionFields=new Set(['touchEnabled','bubblesEnabled','speechBubbleScale','bubbleSeconds','idleSeconds','sleepMinutes']);
 const actionOptions=[...expressions,...motions];
+const resettableTabs=new Set<TabId>(['appearance','interaction']);
+const panel=(id:TabId,body:string)=>
+ `<div id="panel-${id}" data-panel="${id}" role="tabpanel" aria-labelledby="tab-${id}" tabindex="0" ${id==='appearance'?'':'hidden'}>${body}</div>`;
 
 export async function settingsPage(app:HTMLElement){
  document.body.className='settings-page';
@@ -31,55 +43,62 @@ export async function settingsPage(app:HTMLElement){
   <button type="button" class="secondary" data-restore-position="${slot}" disabled>恢复</button>
  </div>`).join('');
  app.innerHTML=`<main class="settings-shell">
-  <header class="settings-title"><h1>浙大娘</h1></header>
-  <nav class="tabs" aria-label="设置分类">${tabs.map(([id,label],index)=>`<button type="button" data-tab="${id}" class="${index===0?'active':''}" aria-pressed="${index===0}">${label}</button>`).join('')}</nav>
-  <div data-panel="appearance" aria-label="外观">
-   ${group('界面和大小',
-    range('size','桌宠大小',210,840,1,'size','拖动实时预览，松手自动保存')
-    +select('theme','界面主题',[['system','跟随系统'],['light','浅色'],['dark','深色']])
-    +select('accent','界面强调色',[['blue','浙大蓝'],['violet','藤紫'],['sage','竹青'],['coral','珊瑚红']])
-    +select('density','设置间距',[['comfortable','舒适'],['compact','紧凑']])
-    +range('textScale','设置字号',.85,1.3))}
-   ${group('动作观感',
+  <header class="settings-title">
+   <h1>浙大娘设置</h1>
+   <nav class="tabs" role="tablist" aria-label="设置分类">${tabs.map(([id,label],index)=>`<button id="tab-${id}" type="button" role="tab" aria-controls="panel-${id}" aria-selected="${index===0}" tabindex="${index===0?0:-1}" data-tab="${id}">${label}</button>`).join('')}</nav>
+  </header>
+  <div class="settings-content">
+  ${panel('appearance',
+   group('大小与动效',
+    range('size','桌宠大小',210,840,1,'size','拖动时预览，松手保存')
+    +`<div data-animated-only>${
     select('motion','动效',[['full','完整'],['low','轻柔'],['off','静止']])
     +range('intensity','整体动作幅度',0,1.6)
     +range('headElasticity','头部回弹',0,1.5)
-    +toggle('idleEnabled','空闲时眨眼和呼吸'),'data-animated-only')}
-  </div>
-  <div data-panel="interaction" aria-label="互动" hidden>
-   ${group('键鼠和视线',
+    +toggle('idleEnabled','空闲时眨眼和呼吸') }</div>`)
+   +group('设置界面',
+    select('theme','界面主题',[['system','跟随系统'],['light','浅色'],['dark','深色']])
+    +select('accent','界面强调色',[['blue','浙大蓝'],['violet','藤紫'],['sage','竹青'],['coral','珊瑚红']])
+    +select('density','设置间距',[['comfortable','舒适'],['compact','紧凑']])
+    +range('textScale','设置字号',.85,1.3)))}
+  ${panel('interaction',
+   group('键鼠和视线',
     toggle('inputEnabled','响应键鼠输入','在其他应用操作时也会回应')
     +select('inputMode','输入模式',[['keyboard_mouse','键盘和鼠标'],['keyboard_only','仅键盘']])
-    +range('handSpeed','手部速度',.5,2)
+    +toggle('cursorFollow','视线跟随鼠标')
+    +disclosure('inputTuning','调整手部动作与视线',
+    range('handSpeed','手部速度',.5,2)
     +range('keyboardScale','键盘动作幅度',0,1.6)
     +range('mouseScale','鼠标动作幅度',0,1.6)
-    +toggle('gamepadEnabled','手柄输入','A 操作键盘，B 操作鼠标，左摇杆选键区')
-    +toggle('cursorFollow','视线跟随鼠标')
     +range('gazeScale','视线跟随幅度',.5,3.2)
     +toggle('gazeReturnEnabled','指针静止后视线回正')
-    +range('gazeIdleSeconds','回正前等待',1,15,1,'秒'))}
-   ${group('按键浮显',
-    toggle('showKeys','显示短时按键提示')
-    +range('keyBubbleScale','按键提示大小',.8,1.8)
+    +range('gazeIdleSeconds','回正前等待',1,15,1,'秒')
+    +toggle('gamepadEnabled','手柄输入','A 操作键盘，B 操作鼠标，左摇杆选键区')))
+   +group('桌面提示',
+    `<div class="overlay-example" role="group" aria-label="按键和气泡位置示例">
+      <div class="example-stage"><kbd class="example-key">Space</kbd><span class="example-speech">开工啦。</span><i aria-hidden="true"></i><span class="example-off" hidden>桌面提示已关闭</span></div>
+     </div>`
+    +toggle('showKeys','显示按键提示')
+    +toggle('bubblesEnabled','显示互动气泡')
+    +disclosure('overlayTuning','调整按键和气泡显示',
+    range('keyBubbleScale','按键提示大小',.8,1.8)
+    +range('speechBubbleScale','气泡大小',.8,1.6)
     +toggle('multiKeys','同时显示多个按键')
     +range('maxKeys','同时显示上限',1,6,1,'个')
     +toggle('repeatKeys','长按重复浮显','持续按住时只重复提示')
-    +range('overlayTop','浮显高度',.08,.17,.01,'%','从窗口顶部到按键和气泡的距离')
-    +toggle('overlaySwapped','交换按键与气泡的左右位置'))}
-   ${group('互动气泡',
+    +range('overlayTop','提示高度',.08,.17,.01,'%')
+    +toggle('overlaySwapped','交换按键与气泡的左右位置')
+    +range('bubbleSeconds','气泡停留时间',2,12,1,'秒')))
+   +group('陪伴',
     toggle('touchEnabled','点击角色时回应')
-    +toggle('bubblesEnabled','显示互动气泡')
-    +range('speechBubbleScale','气泡大小',.8,1.6)
-    +range('bubbleSeconds','气泡停留时间',2,12,1,'秒')
     +select('idleSeconds','空闲问候',[[0,'关闭'],[60,'每分钟'],[90,'每 90 秒'],[180,'每 3 分钟']])
-    +select('sleepMinutes','多久不活动后小憩',[[0,'关闭'],[5,'5 分钟'],[10,'10 分钟'],[15,'15 分钟']]),'data-companion-only')}
-   ${group('声音',
+    +select('sleepMinutes','多久不活动后小憩',[[0,'关闭'],[5,'5 分钟'],[10,'10 分钟'],[15,'15 分钟']]),'data-companion-only')
+   +group('声音',
     toggle('sfxEnabled','键鼠和互动音效')
     +range('sfxVolume','音量',0,1)
-    +button('testSound','试听'))}
-  </div>
-  <div data-panel="desktop" aria-label="桌面" hidden>
-   ${group('窗口',
+    +button('testSound','试听')))}
+  ${panel('desktop',
+   group('窗口',
     toggle('alwaysOnTop','窗口置顶')
     +toggle('clickThrough','整窗鼠标穿透','可从托盘或 Ctrl+Alt+Z 找回')
     +toggle('edgeSnap','靠近屏幕边缘时吸附')
@@ -88,38 +107,60 @@ export async function settingsPage(app:HTMLElement){
     +toggle('hoverFade','指针停在角色上时淡化')
     +range('hoverDelay','淡化等待',250,1500,50,'毫秒')
     +range('hoverOpacity','淡化后不透明度',.2,.8,.05)
-    +`<div class="button-row">${button('recover','找回桌宠')}${button('hidePet','暂时隐藏')}</div>`)}
-   ${group('常用位置',`<div class="position-presets">${positions}</div>`)}
-  </div>
-  <div data-panel="advanced" aria-label="高级" hidden>
-   ${group('运行',
+    +`<div class="button-row">${button('recover','找回桌宠')}${button('hidePet','暂时隐藏')}</div>`)
+   +group('常用位置',`<div class="position-presets">${positions}</div>`))}
+  ${panel('advanced',
+   group('运行',
     toggle('autostart','登录 Windows 后启动')
     +select('fps','绘制帧率',[[30,'30 FPS'],[60,'60 FPS']])
-    +`<p id="runtimeStatus" class="runtime-status" role="status"></p>`)}
-   ${group('动作快捷键',
+    +`<p id="runtimeStatus" class="runtime-status" role="status"></p><p class="version">版本 ${version}</p>`)
+   +group('动作快捷键',
     `<p class="settings-help">用 Ctrl 或 Alt 加字母、数字或 F 键。Ctrl+Alt+Z 用于找回桌宠。</p>
-    <details id="shortcutEditor"><summary>编辑 25 个动作槽</summary>
-    <div class="shortcut-list"></div>${button('saveShortcuts','保存快捷键')}</details>`,'data-companion-only')}
+    <details id="shortcutEditor" class="settings-disclosure"><summary>编辑 25 个动作槽</summary>
+    <div class="shortcut-list"></div>${button('saveShortcuts','保存快捷键')}</details>`,'data-companion-only'))}
   </div>
-  <footer><span id="saved" role="status">设置自动保存</span><span class="version">${version}</span></footer>
-  <p id="notice" role="alert"></p>
+  <footer class="settings-footer">
+   <div class="settings-status"><span id="saved" role="status">设置自动保存</span><p id="notice" role="alert"></p></div>
+   <div class="settings-footer-actions">${button('undoReset','撤销')}${button('resetPage','恢复本页默认')}</div>
+  </footer>
+  <dialog id="resetDialog" aria-labelledby="resetTitle" aria-describedby="resetDescription">
+   <form method="dialog">
+    <h2 id="resetTitle">恢复本页默认设置？</h2>
+    <p id="resetDescription"></p>
+    <div class="button-row"><button value="cancel" class="secondary" autofocus>取消</button><button value="confirm" class="primary">恢复默认</button></div>
+   </form>
+  </dialog>
  </main>`;
-
  const controls=Array.from(app.querySelectorAll<Control>('[data-pref]'));
  const panels=Array.from(app.querySelectorAll<HTMLElement>('[data-panel]'));
  const navButtons=Array.from(app.querySelectorAll<HTMLButtonElement>('[data-tab]'));
+ const content=app.querySelector<HTMLElement>('.settings-content')!;
  const status=app.querySelector<HTMLElement>('#saved')!;
  const notice=app.querySelector<HTMLElement>('#notice')!;
  const runtimeStatus=app.querySelector<HTMLElement>('#runtimeStatus')!;
  const exceptionInput=app.querySelector<HTMLTextAreaElement>('#fullscreenExceptions')!;
  const shortcutList=app.querySelector<HTMLElement>('.shortcut-list')!;
- let currentTab='appearance';
+ const example=app.querySelector<HTMLElement>('.example-stage')!;
+ const exampleKey=example.querySelector<HTMLElement>('.example-key')!;
+ const exampleSpeech=example.querySelector<HTMLElement>('.example-speech')!;
+ const exampleOff=example.querySelector<HTMLElement>('.example-off')!;
+ const resetButton=app.querySelector<HTMLButtonElement>('#resetPage')!;
+ const undoButton=app.querySelector<HTMLButtonElement>('#undoReset')!;
+ const resetDialog=app.querySelector<HTMLDialogElement>('#resetDialog')!;
+ const resetDescription=app.querySelector<HTMLElement>('#resetDescription')!;
+ const defaults=normalizePreferences() as Preferences;
+ const scrollPositions=new Map<TabId,number>();
+ let currentTab:TabId='appearance';
  let edition='full';
  let saveRevision=0;
  let previewSize:number|undefined;
  let previewJob:Promise<void>|undefined;
+ let sizeDraft:number|undefined;
  let shortcutDraftRevision=0;
  let shortcutDraftDirty=false;
+ let renderedShortcuts='';
+ let undoReset:{before:Partial<Preferences>;defaults:Partial<Preferences>}|undefined;
+ let resetBusy=false;
 
  const outputLabel=(input:HTMLInputElement)=>{
   const output=document.getElementById(`${input.dataset.pref}Value`);
@@ -130,36 +171,65 @@ export async function settingsPage(app:HTMLElement){
  };
  const syncShortcuts=()=>{
   if(shortcutDraftDirty)return;
+  const serialized=JSON.stringify(prefs.shortcuts);
+  if(serialized===renderedShortcuts)return;
+  renderedShortcuts=serialized;
   shortcutList.innerHTML=prefs.shortcuts.map((slot,index)=>`<div class="shortcut-row">
    <label><input type="checkbox" data-shortcut-enabled="${index}" ${slot.enabled?'checked':''}>启用 ${index+1}</label>
    <input data-shortcut-chord="${index}" aria-label="快捷键 ${index+1}" maxlength="48" placeholder="Ctrl+Alt+1" value="${escapeHtml(slot.chord)}">
    <select data-shortcut-action="${index}" aria-label="动作 ${index+1}">${actionOptions.map(([id,label])=>`<option value="${id}" ${slot.action===id?'selected':''}>${label}</option>`).join('')}</select>
   </div>`).join('');
  };
- const dependencyEnabled=(key:string)=>{
+ const available=(key:string)=>{
   if(!desktop&&nativeFields.has(key))return false;
   if(edition!=='full'&&companionFields.has(key))return false;
-  if(edition==='static'&&['fps','hoverFade','hoverDelay','hoverOpacity'].includes(key))return false;
+  if(edition==='static'&&['fps','hoverFade','hoverDelay','hoverOpacity','motion','intensity','headElasticity','idleEnabled'].includes(key))return false;
+  return true;
+ };
+ const dependencyEnabled=(key:string)=>{
+  if(!available(key))return false;
+  if(['inputMode','handSpeed','keyboardScale'].includes(key))return prefs.inputEnabled;
+  if(key==='mouseScale')return prefs.inputEnabled&&prefs.inputMode==='keyboard_mouse';
+  if(['intensity','headElasticity','idleEnabled'].includes(key))return prefs.motion!=='off';
   if(['repeatKeys','multiKeys','keyBubbleScale'].includes(key))return prefs.showKeys;
   if(key==='maxKeys')return prefs.showKeys&&prefs.multiKeys;
   if(key==='gazeScale'||key==='gazeReturnEnabled')return prefs.cursorFollow;
   if(key==='gazeIdleSeconds')return prefs.cursorFollow&&prefs.gazeReturnEnabled;
   if(key==='speechBubbleScale'||key==='bubbleSeconds'||key==='idleSeconds')return prefs.bubblesEnabled;
+  if(key==='overlayTop'||key==='overlaySwapped')return prefs.showKeys||(edition==='full'&&prefs.bubblesEnabled);
   if(key==='hoverDelay'||key==='hoverOpacity')return prefs.hoverFade;
   if(key==='sfxVolume')return prefs.sfxEnabled;
   return true;
+ };
+ const resetKeys=()=>controls
+  .filter(input=>input.closest<HTMLElement>('[data-panel]')?.dataset.panel===currentTab)
+  .map(input=>input.dataset.pref as keyof Preferences)
+  .filter(key=>available(key)&&prefs[key]!==defaults[key]);
+ const syncFooter=()=>{
+  resetButton.hidden=!resettableTabs.has(currentTab);
+  resetButton.disabled=resetBusy||!resetKeys().length;
+  undoButton.hidden=!undoReset;
+  undoButton.disabled=resetBusy;
  };
  const syncControls=()=>{
   for(const input of controls){
    const key=input.dataset.pref as keyof Preferences;
    const value=prefs[key];
    if(input instanceof HTMLInputElement&&input.type==='checkbox')input.checked=Boolean(value);
-   else input.value=String(value);
+   else input.value=String(key==='size'&&sizeDraft!==undefined?sizeDraft:value);
    input.disabled=!dependencyEnabled(key);
    if(input instanceof HTMLInputElement&&input.type==='range')outputLabel(input);
   }
   exceptionInput.disabled=!desktop||!prefs.fullscreenHide;
   if(document.activeElement!==exceptionInput)exceptionInput.value=prefs.fullscreenExceptions.join(', ');
+  exampleKey.hidden=!prefs.showKeys;
+  exampleSpeech.hidden=edition!=='full'||!prefs.bubblesEnabled;
+  exampleOff.hidden=!(exampleKey.hidden&&exampleSpeech.hidden);
+  for(const key of ['bubblesEnabled','speechBubbleScale','bubbleSeconds']){
+   const row=app.querySelector(`[data-pref="${key}"]`)?.closest<HTMLElement>('label');
+   if(row)row.hidden=edition!=='full';
+  }
+  syncFooter();
   syncShortcuts();
  };
  const queuePreview=(size:number)=>{
@@ -185,7 +255,10 @@ export async function settingsPage(app:HTMLElement){
   const key=input.dataset.pref as keyof Preferences;
   input.oninput=()=>{
    if(input instanceof HTMLInputElement)outputLabel(input);
-   if(desktop&&key==='size')queuePreview(Number(input.value));
+   if(key==='size'){
+    sizeDraft=Number(input.value);
+    if(desktop)queuePreview(sizeDraft);
+   }
   };
   input.onchange=async()=>{
    const value=input instanceof HTMLInputElement&&input.type==='checkbox'
@@ -194,7 +267,13 @@ export async function settingsPage(app:HTMLElement){
     await previewJob;
     if(Number(input.value)!==value)return;
    }
+   if(key==='size')sizeDraft=undefined;
    await save({[key]:value});
+  };
+  if(key==='size')input.onpointercancel=()=>{
+   sizeDraft=undefined;
+   syncControls();
+   if(desktop)queuePreview(prefs.size);
   };
  }
  exceptionInput.onchange=async()=>{
@@ -233,7 +312,43 @@ export async function settingsPage(app:HTMLElement){
   const revision=shortcutDraftRevision;
   if(await save({shortcuts:drafts},'快捷键已保存')&&revision===shortcutDraftRevision){
    shortcutDraftDirty=false;
+   renderedShortcuts='';
    syncShortcuts();
+  }
+ });
+ run('resetPage',async()=>{
+  resetDialog.returnValue='';
+  resetDescription.textContent=currentTab==='appearance'?'恢复本页可用的尺寸、动效与界面设置。':'恢复本页可用的键鼠、提示、陪伴与声音设置。';
+  resetDialog.showModal();
+ });
+ resetDialog.addEventListener('close',()=>{
+  if(resetDialog.returnValue!=='confirm'||resetBusy)return;
+  const keys=resetKeys();
+  if(!keys.length)return;
+  const before=Object.fromEntries(keys.map(key=>[key,prefs[key]])) as Partial<Preferences>;
+  const patch=Object.fromEntries(keys.map(key=>[key,defaults[key]])) as Partial<Preferences>;
+  resetBusy=true;
+  syncFooter();
+  void save(patch,'本页已恢复默认').then(saved=>{
+   if(saved)undoReset={before,defaults:patch};
+  }).finally(()=>{resetBusy=false;syncFooter();if(!undoButton.hidden)undoButton.focus();});
+ });
+ run('undoReset',async()=>{
+  if(!undoReset)return;
+  const current=undoReset;
+  const patch=Object.fromEntries(Object.entries(current.before).filter(([key])=>
+   prefs[key as keyof Preferences]===current.defaults[key as keyof Preferences])) as Partial<Preferences>;
+  resetBusy=true;
+  syncFooter();
+  try{
+   if(!Object.keys(patch).length){
+    undoReset=undefined;
+    status.textContent='本页设置已手动调整';
+   }else if(await save(patch,'已撤销恢复默认'))undoReset=undefined;
+  }finally{
+   resetBusy=false;
+   syncFooter();
+   (resetButton.hidden?navButtons.find(tab=>tab.dataset.tab===currentTab):resetButton)?.focus();
   }
  });
  run('recover',()=>call('reset_pet'),true);
@@ -267,6 +382,7 @@ export async function settingsPage(app:HTMLElement){
   for(const card of app.querySelectorAll<HTMLElement>('[data-companion-only]'))card.hidden=edition!=='full';
   for(const card of app.querySelectorAll<HTMLElement>('[data-animated-only]'))card.hidden=edition==='static';
   app.querySelector<HTMLButtonElement>('[data-tab="interaction"]')!.hidden=edition==='static';
+  if(edition==='static'&&currentTab==='interaction')activateTab('appearance');
   syncControls();
  };
  const refreshMetrics=async()=>{
@@ -280,16 +396,33 @@ export async function settingsPage(app:HTMLElement){
    :`键盘反馈 ${metrics.keyboardHookActive?'就绪':'状态采样'}${prefs.gamepadEnabled?` · 手柄 ${metrics.gamepadConnected?'已连接':'未连接'}`:''}`;
  };
  const reportError=(error:unknown)=>notify(String(error));
- for(const tab of navButtons)tab.onclick=()=>{
-  currentTab=tab.dataset.tab!;
+ const activateTab=(id:TabId)=>{
+  if(id===currentTab)return;
+  scrollPositions.set(currentTab,content.scrollTop);
+  currentTab=id;
   for(const node of navButtons){
-   node.classList.toggle('active',node===tab);
-   node.setAttribute('aria-pressed',String(node===tab));
+   const selected=node.dataset.tab===id;
+   node.setAttribute('aria-selected',String(selected));
+   node.tabIndex=selected?0:-1;
   }
   for(const panel of panels)panel.hidden=panel.dataset.panel!==currentTab;
+  content.scrollTop=scrollPositions.get(id)??0;
+  syncFooter();
   if(currentTab==='desktop')void refreshPositions().catch(reportError);
   if(currentTab==='advanced')void refreshMetrics().catch(reportError);
  };
+ for(const tab of navButtons)tab.onclick=()=>activateTab(tab.dataset.tab as TabId);
+ const tabList=app.querySelector<HTMLElement>('[role="tablist"]')!;
+ tabList.addEventListener('keydown',event=>{
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  const navigable=navButtons.filter(tab=>!tab.hidden);
+  const position=navigable.findIndex(tab=>tab.dataset.tab===currentTab);
+  const next=event.key==='Home'?0:event.key==='End'?navigable.length-1
+   :(position+(event.key==='ArrowLeft'?-1:1)+navigable.length)%navigable.length;
+  event.preventDefault();
+  activateTab(navigable[next].dataset.tab as TabId);
+  navigable[next].focus();
+ });
  const unsubscribe=onPreferences(syncControls);
  const metricsTimer=window.setInterval(()=>{
   if(desktop&&currentTab==='advanced')void refreshMetrics().catch(reportError);
@@ -298,80 +431,36 @@ export async function settingsPage(app:HTMLElement){
  syncControls();
  await refreshMetrics().catch(reportError);
 }
-type MenuPosition={x:number;y:number};
-type MenuDrag={
- pointerId:number;
- startX:number;
- startY:number;
- scale:number;
- origin:Promise<MenuPosition>;
- delta:MenuPosition;
- sent:MenuPosition;
- finished:boolean;
- sending:boolean;
-};
-
-function bindMenuDrag(header:HTMLElement,reportError:(error:unknown)=>void){
- let active:MenuDrag|undefined;
-
- async function flush(drag:MenuDrag){
-  if(drag.sending)return;
-  drag.sending=true;
-  try{
-   const origin=await drag.origin;
-   while(drag.finished||drag.delta.x!==drag.sent.x||drag.delta.y!==drag.sent.y){
-    const {delta,finished}=drag;
-    drag.sent=delta;
-    await call('move_menu',{x:origin.x+delta.x,y:origin.y+delta.y,finished});
-    if(finished)break;
-   }
-  }catch(error){
-   drag.finished=true;
-   reportError(error);
-  }finally{
-   drag.sending=false;
-   if(drag.finished&&active===drag){
-    active=undefined;
-    header.classList.remove('dragging');
-    if(header.hasPointerCapture(drag.pointerId))header.releasePointerCapture(drag.pointerId);
-   }
-  }
- }
-
- function update(event:PointerEvent,finished:boolean,useEventPosition=true){
-  const drag=active;
-  if(!drag||drag.pointerId!==event.pointerId||drag.finished)return;
-  if(useEventPosition){
-   // Client coordinates move with the window, so keep the origin on the screen.
-   drag.delta={
-    x:Math.round((event.screenX-drag.startX)*drag.scale),
-    y:Math.round((event.screenY-drag.startY)*drag.scale),
-   };
-  }
-  drag.finished=finished;
-  if(finished)header.classList.remove('dragging');
-  void flush(drag);
- }
-
- header.onpointerdown=event=>{
-  if(active||!event.isPrimary||event.button!==0||(event.target as HTMLElement).closest('button'))return;
-  event.preventDefault();
-  header.setPointerCapture(event.pointerId);
-  header.classList.add('dragging');
-  active={pointerId:event.pointerId,startX:event.screenX,startY:event.screenY,scale:window.devicePixelRatio,
-   origin:call<MenuPosition>('begin_menu_drag'),delta:{x:0,y:0},sent:{x:0,y:0},finished:false,sending:false};
-  void flush(active);
- };
- header.onpointermove=event=>update(event,false);
- header.onpointerup=event=>update(event,true);
- header.onpointercancel=header.onlostpointercapture=event=>update(event,true,false);
-}
-
 export function menuPage(app:HTMLElement){
  document.body.className='menu-page';
- app.innerHTML=`<main class="interaction-menu"><header id="menuDrag"><h1>和小浙互动</h1><button id="closeMenu" class="icon-button" aria-label="关闭">×</button></header><div class="action-grid"><button data-action="default">日常</button><button data-action="nod">轻轻点头</button><button data-action="smile">开心一下</button><button data-action="sleepy">闭眼休息</button></div><button id="menuSettings" class="wide-button">设置与个性化 <span>›</span></button><div class="button-row">${button('menuHide','隐藏')}${button('menuQuit','退出')}</div><p id="notice" role="alert"></p></main>`;
+ document.body.toggleAttribute('data-native',desktop);
+ app.innerHTML=`<main class="interaction-menu">
+  <header id="menuDrag"><h1>和小浙互动</h1><button id="closeMenu" class="icon-button" type="button" aria-label="关闭菜单">×</button></header>
+  <div class="action-grid" role="group" aria-label="互动动作">
+   <button type="button" data-action="nod">轻轻点头</button><button type="button" data-action="smile">开心一下</button>
+   <button type="button" data-action="sleepy">闭眼休息</button><button type="button" data-action="default">回到日常</button>
+  </div>
+  <div class="menu-options">
+   <button id="menuSettings" class="wide-button" type="button">桌宠设置 <span aria-hidden="true">›</span></button>
+   <button id="menuInput" class="wide-button" type="button" data-pref="inputEnabled" ${desktop?'':'hidden'}></button>
+  </div>
+  <div class="menu-footer" ${desktop?'':'hidden'}>${button('menuHide','暂时隐藏')}${button('menuQuit','退出程序')}</div>
+  <p id="notice" role="alert"></p>
+ </main>`;
  const close=()=>{if(desktop)return call('close_panel',{label:'menu'});window.close();return Promise.resolve();};
  const reportError=(error:unknown)=>notify(String(error));
+ const menuInput=app.querySelector<HTMLButtonElement>('#menuInput')!;
+ const syncInput=()=>{menuInput.textContent=prefs.inputEnabled?'暂停键鼠回应':'恢复键鼠回应';};
+ syncInput();
+ const unsubscribe=onPreferences(syncInput);
+ window.addEventListener('beforeunload',unsubscribe,{once:true});
+ menuInput.onclick=async()=>{
+  menuInput.disabled=true;
+  try{
+   if(await updatePreferences({inputEnabled:!prefs.inputEnabled}))await close();
+  }catch(error){reportError(error);}
+  finally{menuInput.disabled=false;}
+ };
  app.querySelectorAll<HTMLButtonElement>('[data-action]').forEach(node=>node.onclick=()=>void sendAction(node.dataset.action!).then(close).catch(reportError));
  document.getElementById('menuSettings')!.onclick=()=>desktop?void call('show_settings').catch(error=>notify(String(error))):void window.open('?settings','zju-settings');
  document.getElementById('menuHide')!.onclick=()=>desktop?void call('hide_pet').then(close).catch(reportError):void close();
@@ -379,9 +468,17 @@ export function menuPage(app:HTMLElement){
  document.getElementById('closeMenu')!.onclick=()=>void close().catch(reportError);
  window.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();void close().catch(reportError);}});
  if(desktop){
-  bindMenuDrag(document.getElementById('menuDrag')!,reportError);
+  bindWindowDrag(document.getElementById('menuDrag')!,'menu',reportError);
   const panel=app.querySelector<HTMLElement>('.interaction-menu')!;
-  let previousHeight=0;
+  void call<Metrics>('input_metrics').then(metrics=>{
+   if(metrics.edition!=='full'){
+    panel.querySelector('h1')!.textContent='桌宠菜单';
+    panel.querySelector<HTMLElement>('.action-grid')!.hidden=true;
+    menuInput.hidden=metrics.edition==='static';
+   }
+  }).catch(reportError);
+  let previousHeight=Math.ceil(panel.getBoundingClientRect().height);
+  void call('menu_ready',{height:previousHeight}).catch(reportError);
   const observer=new ResizeObserver(()=>{
    const height=Math.ceil(panel.getBoundingClientRect().height);
    if(height===previousHeight)return;

@@ -5,8 +5,18 @@ import {KeyOverlay} from '../src/key-overlay.mjs';
 import {GazeController} from '../src/gaze-controller.mjs';
 import {normalizePreferences} from '../src/preferences.mjs';
 import {keyTarget} from '../src/key-target.mjs';
+import {FrameRate} from '../src/frame-rate.mjs';
 
 const idle={keysHeld:0,mouseDown:false,newPress:false,newMousePress:false,keyLabel:'',reach:0};
+test('render pacing reaches its target on different display refresh rates',()=>{
+ for(const refresh of [60,75,120,144,165,180])for(const target of [30,60]){
+  const frameRate=new FrameRate();
+  const hits=Array.from({length:refresh*3},(_,i)=>frameRate.due(i*1000/refresh,target)).filter(Boolean);
+  assert.equal(hits.length,target*3,`${refresh} Hz at ${target} FPS`);
+  assert(frameRate.due(10000,target));
+  assert(!frameRate.due(10000+.01,target));
+ }
+});
 test('OS repeat keeps a held pose without kicking another head bounce',()=>{
  const repeated=new InputState(),held=new InputState();
  for(const s of [repeated,held]){s.update({...idle,keysHeld:1,newPress:true,keyLabel:'A',targetX:.6},0);s.snapshot(70);}
@@ -38,6 +48,16 @@ test('a head touch can consume both mouse head impulses while keeping hand and k
  }
  touch.update({...idle,keysHeld:1,mouseDown:true,newMousePress:true,targetX:.6},600);
  assert(touch.snapshot(650).mouseBounce>.1);
+});
+test('an edge-only mouse tap has visible contact and releases without a held button',()=>{
+ for(const speed of [.5,1,2]){
+  const input=new InputState();
+  input.snapshot(0,speed);
+  input.update({...idle,newMousePress:true},20);
+  assert(input.snapshot(20+88/speed,speed).mousePress>.85);
+  assert.equal(input.mouseHeld,false);
+  assert(Math.abs(input.snapshot(20+400/speed,speed).mousePress)<.01);
+ }
 });
 test('even short taps reach each of the five keyboard landings before returning',()=>{
  for(const code of ['KeyQ','KeyA','KeyU','KeyH','Space']){

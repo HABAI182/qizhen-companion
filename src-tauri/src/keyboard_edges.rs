@@ -9,6 +9,8 @@ static PRESS:[AtomicU8;256]=[const {AtomicU8::new(0)};256];
 static REPEAT:[AtomicBool;256]=[const {AtomicBool::new(false)};256];
 static ACTIVE:AtomicBool=AtomicBool::new(false);
 static RECOVER:AtomicBool=AtomicBool::new(false);
+static MOUSE_ACTIVE:AtomicBool=AtomicBool::new(false);
+static MOUSE_PRESSED:AtomicBool=AtomicBool::new(false);
 const CTRL:u8=1;
 const ALT:u8=2;
 const SHIFT:u8=4;
@@ -37,6 +39,8 @@ pub fn take_press(key:usize)->Option<(bool,bool,bool)>{
 pub fn take_repeat(key:usize)->bool{REPEAT[key].swap(false,Ordering::AcqRel)}
 pub fn active()->bool{ACTIVE.load(Ordering::Acquire)}
 pub fn take_recover()->bool{RECOVER.swap(false,Ordering::AcqRel)}
+pub fn mouse_active()->bool{MOUSE_ACTIVE.load(Ordering::Acquire)}
+pub fn take_mouse_press()->bool{MOUSE_PRESSED.swap(false,Ordering::AcqRel)}
 
 fn modifier_down(keys:&[usize])->bool{
     keys.iter().any(|&key|DOWN[key].load(Ordering::Acquire))
@@ -65,19 +69,48 @@ unsafe extern "system" fn callback(code:i32,message:WPARAM,data:LPARAM)->LRESULT
     }
     CallNextHookEx(std::ptr::null_mut(),code,message,data)
 }
+fn mouse_message(message:u32){
+    // Keep just an edge. Motion, coordinates and button history are unnecessary.
+    if matches!(message,WM_LBUTTONDOWN|WM_RBUTTONDOWN|WM_MBUTTONDOWN){
+        MOUSE_PRESSED.store(true,Ordering::Release);
+    }
+}
+unsafe extern "system" fn mouse_callback(code:i32,message:WPARAM,data:LPARAM)->LRESULT{
+    if code==HC_ACTION as i32{mouse_message(message as u32);}
+    CallNextHookEx(std::ptr::null_mut(),code,message,data)
+}
 pub fn start(){std::thread::spawn(||unsafe{
     let module=windows_sys::Win32::System::LibraryLoader::GetModuleHandleW(std::ptr::null());
     let hook=SetWindowsHookExW(WH_KEYBOARD_LL,Some(callback),module,0);
-    if hook.is_null(){eprintln!("短按事件监听不可用；保留键盘状态采样");return;}
-    ACTIVE.store(true,Ordering::Release);
+    let mouse_hook=SetWindowsHookExW(WH_MOUSE_LL,Some(mouse_callback),module,0);
+    if hook.is_null(){eprintln!("短按事件监听不可用；保留键盘状态采样");}
+    if mouse_hook.is_null(){eprintln!("短按事件监听不可用；保留鼠标状态采样");}
+    if hook.is_null()&&mouse_hook.is_null(){return;}
+    ACTIVE.store(!hook.is_null(),Ordering::Release);
+    MOUSE_ACTIVE.store(!mouse_hook.is_null(),Ordering::Release);
     let mut msg:MSG=std::mem::zeroed();
     while GetMessageW(&mut msg,std::ptr::null_mut(),0,0)>0{TranslateMessage(&msg);DispatchMessageW(&msg);}
-    ACTIVE.store(false,Ordering::Release);UnhookWindowsHookEx(hook);
+    ACTIVE.store(false,Ordering::Release);
+    MOUSE_ACTIVE.store(false,Ordering::Release);
+    if !hook.is_null(){UnhookWindowsHookEx(hook);}
+    if !mouse_hook.is_null(){UnhookWindowsHookEx(mouse_hook);}
 });}
 
 #[cfg(test)]
 mod tests{
     use super::*;
+    #[test]
+    fn mouse_click_survives_a_short_release_and_does_not_capture_motion(){
+        mouse_message(WM_LBUTTONDOWN);
+        mouse_message(WM_LBUTTONUP);
+        assert!(take_mouse_press());
+        mouse_message(WM_MOUSEMOVE);
+        mouse_message(WM_MOUSEWHEEL);
+        assert!(!take_mouse_press());
+        mouse_message(WM_RBUTTONDOWN);
+        assert!(take_mouse_press());
+        assert!(!take_mouse_press());
+    }
     #[test]
     fn short_tap_survives_release_but_repeat_is_not_another_press(){
         let k=65;
