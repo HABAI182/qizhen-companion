@@ -21,6 +21,7 @@ async function petPage(){
  let renderedState=state.snapshot(performance.now(),prefs.handSpeed);
  const pointer={x:0,y:0};let expression='default',actionStarted=0,frameCount=0,lastDraw=0,lastKeys='',request=0,lastHeartbeat=0,speechTimer=0;
  let lastActivity=performance.now(),lastSpeech=lastActivity,hoverSince=Infinity,automaticRest=false,touchStarted=-Infinity;
+ let mouseHeadMutedUntil=-Infinity;
  let idleLine=0;
  const bubble=document.getElementById('speech')!;
  const lines:Record<string,string>={smile:'求是就好啦！',sleepy:'我眯一小会儿。',nod:'嗯，我在听。'};
@@ -47,7 +48,9 @@ async function petPage(){
   const now=performance.now();
   if(!prefs.inputEnabled)frame={...frame,keysHeld:0,mouseDown:false,newPress:false,newMousePress:false,presses:[],repeats:[]};
   if(prefs.inputMode==='keyboard_only')frame={...frame,mouseDown:false,newMousePress:false};
-  state.update(frame,now);pointer.x=frame.cursorX;pointer.y=frame.cursorY;gaze.update(pointer.x,pointer.y,now,frame.cursorMoved||frame.newMousePress);
+  state.update(frame,now);
+  if(now<mouseHeadMutedUntil)state.cancelMouseHead();
+  pointer.x=frame.cursorX;pointer.y=frame.cursorY;gaze.update(pointer.x,pointer.y,now,frame.cursorMoved||frame.newMousePress);
   if(frame.hovering===true)hoverSince=Math.min(hoverSince,now);
   else if(frame.hovering===false)hoverSince=Infinity;
   const pressed=frame.newPress||frame.newMousePress;
@@ -76,11 +79,24 @@ async function petPage(){
  canvas.oncontextmenu=event=>{event.preventDefault();menu();};document.getElementById('interact')!.onclick=menu;
  document.getElementById('settings')!.onclick=()=>desktop?void call('show_settings').catch(error=>notify(String(error))):void window.open('?settings','zju-settings');
  document.getElementById('drag')!.onpointerdown=event=>{if(event.button===0&&desktop)void call('drag_pet').catch(error=>notify(String(error)));};
- canvas.onclick=event=>{
-  if(!prefs.touchEnabled)return;
+ const isHead=(event:MouseEvent)=>{
   const rect=canvas.getBoundingClientRect();
-  act('smile',(event.clientY-rect.top)/rect.height<.69);
+  return (event.clientY-rect.top)/rect.height<.69;
  };
+ // WebView pointer events and the native mouse sample can arrive in either order.
+ canvas.addEventListener('pointerdown',event=>{
+  if(event.button!==0||!prefs.touchEnabled||!isHead(event))return;
+  mouseHeadMutedUntil=Infinity;
+  state.cancelMouseHead();
+ },{capture:true});
+ const finishHeadPress=()=>{
+  if(mouseHeadMutedUntil===Infinity)mouseHeadMutedUntil=performance.now()+75;
+ };
+ window.addEventListener('pointerup',event=>{if(event.button===0)finishHeadPress();});
+ window.addEventListener('pointercancel',finishHeadPress);
+ window.addEventListener('blur',finishHeadPress);
+ canvas.addEventListener('pointerleave',finishHeadPress);
+ canvas.onclick=event=>{if(prefs.touchEnabled)act('smile',isHead(event));};
  function draw(now:number){
   request=requestAnimationFrame(draw);if(now-lastDraw<1000/prefs.fps-.5)return;lastDraw=now;
   const snapshot=state.snapshot(now,prefs.handSpeed);

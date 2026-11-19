@@ -10,10 +10,10 @@ const nodCurve = [
   [0, 0], [65, -.10], [195, 1], [257, .91],
   [460, -.18], [635, .04], [810, 0],
 ] as const;
+const touchEnd = 390;
 const touchCurve = [
-  // Time, compression and pitch. Pitch leads the return as the crown springs back.
-  [0, 0, 0], [34, -.08, 1.5], [101, .98, -9], [143, .81, -6],
-  [243, -.40, 6.5], [343, .15, -1.9], [446, -.05, .6], [540, 0, 0],
+  // Time, compression and pitch.
+  [0, 0, 0], [90, .92, -7.5], [218, -.23, 3.4], [touchEnd, 0, 0],
 ] as const;
 const happyCurve = [
   // Time, smile form, eye aperture, mouth opening, and head lift.
@@ -85,23 +85,21 @@ export class PetMotion {
     const celebrating = options.expression === 'smile';
     const blink = this.blink(now, options.idle && !sleeping && !celebrating);
     const strength = options.intensity;
-    const bounce = (input.keyboardBounce + input.mouseBounce) * strength * options.headElasticity;
     const breathe = (.5 - .5 * Math.cos(now * Math.PI / 1870)) * this.restAge * strength;
     const nod = options.expression === 'nod' ? poseAt(nodCurve, options.actionAge)[0] * strength : 0;
     const [smile, smilingOpen, happyMouth, happyLift] = celebrating ? poseAt(happyCurve, options.actionAge) : [0, 1, 0, 0];
     const touchAge = options.touchAge;
     const touched = touchAge !== undefined;
-    const touchGain = strength * options.headElasticity / .6;
-    const [touchCompression, touchPitch] = touched ? poseAt(touchCurve, touchAge) : [0, 0];
-    const touch = touchCompression * touchGain;
-    const pressedBounce = limit(1.6 * bounce, -.34, 1);
-    const reaction = touch === 0 ? pressedBounce : touch > 0
-      ? Math.max(pressedBounce, touch)
-      : Math.min(pressedBounce, touch);
+    const touching = touched && touchAge < touchEnd;
+    const bounce = touching ? 0 : limit(input.keyboardBounce + input.mouseBounce, -1.05, 1.05) * strength * options.headElasticity;
+    const configuredTouchGain = strength * options.headElasticity / .6;
+    const touchGain = configuredTouchGain <= 1 ? configuredTouchGain : 1 + .08 * (1 - 1 / configuredTouchGain);
+    const [touchCompression, touchPitch] = touching ? poseAt(touchCurve, touchAge) : [0, 0];
+    const reaction = touching ? touchCompression * touchGain : limit(1.6 * bounce, -.34, 1);
     const performedLift = touched ? 0 : happyLift * strength;
     const sleepy = this.sleepy;
     const open = smilingOpen * (1 - sleepy) * blink;
-    const lookWeight = (1 - sleepy) * (1 - .18 * smile);
+    const lookWeight = (1 - sleepy) * (1 - .18 * (touched ? 0 : smile));
     const keyboardReach = strength > 0 ? options.keyboardScale : 0;
 
     return {
@@ -109,7 +107,7 @@ export class PetMotion {
       values: {
         ParamAngleX: this.look.x * 24 * strength * lookWeight,
         ParamAngleY: -this.look.y * 18 * strength * lookWeight - 13 * sleepy - 14 * nod + bounce * 2 + touchPitch * touchGain,
-        ParamAngleZ: this.look.x * 8 * strength * lookWeight + bounce * 3 + 4 * smile - 2 * sleepy,
+        ParamAngleZ: this.look.x * 8 * strength * lookWeight + bounce * 3 + (touched ? 0 : 4 * smile) - 2 * sleepy,
         ParamHeadBounce: limit(reaction + .81 * nod + .53 * sleepy * strength + performedLift + (.06 + .09 * sleepy) * breathe, -.42, 1),
         ParamEyeLidForm: smile * (1 - sleepy) - sleepy,
         ParamEyeLOpen: open,

@@ -22,6 +22,23 @@ test('a mouse press does not reroute or release the keyboard hand',()=>{
  s.update({...idle,keysHeld:1,mouseDown:true,newMousePress:true,targetX:.7,targetY:-.4,targetZone:'right-far'},90);
  const pose=s.snapshot(160);assert(pose.keyboardPress>.5);assert(pose.mousePress>.5);assert.equal(pose.zone,'right-far');assert(pose.reach>0);
 });
+test('a head touch can consume both mouse head impulses while keeping hand and keyboard reactions',()=>{
+ const touch=new InputState(),keyboard=new InputState();
+ const key={...idle,keysHeld:1,newPress:true,keyLabel:'A',targetX:.6};
+ touch.update({...key,mouseDown:true,newMousePress:true},0);
+ keyboard.update(key,0);
+ assert(touch.snapshot(40).mouseBounce>.1);
+ touch.cancelMouseHead();
+ assert(touch.snapshot(120).mousePress>.8);
+ touch.update({...idle,keysHeld:1,targetX:.6},145);
+ for(const time of [155,190,260,500]){
+  const pose=touch.snapshot(time);
+  assert.equal(pose.mouseBounce,0);
+  assert(Math.abs(pose.keyboardBounce-keyboard.snapshot(time).keyboardBounce)<1e-10);
+ }
+ touch.update({...idle,keysHeld:1,mouseDown:true,newMousePress:true,targetX:.6},600);
+ assert(touch.snapshot(650).mouseBounce>.1);
+});
 test('even short taps reach each of the five keyboard landings before returning',()=>{
  for(const code of ['KeyQ','KeyA','KeyU','KeyH','Space']){
   const target=keyTarget(code);
