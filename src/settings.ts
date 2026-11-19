@@ -44,7 +44,7 @@ export async function settingsPage(app:HTMLElement){
  </div>`).join('');
  app.innerHTML=`<main class="settings-shell">
   <header class="settings-title">
-   <h1>浙大娘设置</h1>
+   <h1>启真设置</h1>
    <nav class="tabs" role="tablist" aria-label="设置分类">${tabs.map(([id,label],index)=>`<button id="tab-${id}" type="button" role="tab" aria-controls="panel-${id}" aria-selected="${index===0}" tabindex="${index===0?0:-1}" data-tab="${id}">${label}</button>`).join('')}</nav>
   </header>
   <div class="settings-content">
@@ -435,7 +435,7 @@ export function menuPage(app:HTMLElement){
  document.body.className='menu-page';
  document.body.toggleAttribute('data-native',desktop);
  app.innerHTML=`<main class="interaction-menu">
-  <header id="menuDrag"><h1>和小浙互动</h1><button id="closeMenu" class="icon-button" type="button" aria-label="关闭菜单">×</button></header>
+  <header id="menuDrag"><h1>和启真互动</h1><button id="closeMenu" class="icon-button" type="button" aria-label="关闭菜单">×</button></header>
   <div class="action-grid" role="group" aria-label="互动动作">
    <button type="button" data-action="nod">轻轻点头</button><button type="button" data-action="smile">开心一下</button>
    <button type="button" data-action="sleepy">闭眼休息</button><button type="button" data-action="default">回到日常</button>
