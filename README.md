@@ -1,8 +1,8 @@
-# 启真桌面伴侣
+# 「启真」桌面伴侣
 
-启真是 Windows x64 Live2D 桌面伴侣，名字取自紫金港的启真湖。右键角色可打开互动菜单，托盘提供设置、显示、隐藏和退出。`Ctrl+Alt+Shift+R` 找回桌宠并关闭整窗穿透。
+「启真」是 Windows x64 Live2D 桌面伴侣，名字取自紫金港的启真湖。右键角色可打开互动菜单，托盘提供设置、显示、隐藏和退出。`Ctrl+Alt+Shift+R` 找回桌宠并关闭整窗穿透。
 
-- [下载启真 v0.3.1 便携 EXE](https://github.com/HABAI182/qizhen-companion/releases/download/v0.3.1/qizhen-companion-0.3.1-windows-x64.exe)
+- [下载「启真」 v0.3.2 便携 EXE](https://github.com/HABAI182/qizhen-companion/releases/download/v0.3.2/qizhen-companion-0.3.2-windows-x64.exe)
 - [历史版本 v0.3.0](https://github.com/HABAI182/zju-companion/releases/tag/v0.3.0)
 
 - 角色左手（画面右）操作键盘四区和空格，右手（画面左）跟鼠标移位和按键。视线、闭眼、点头、开心和触碰回弹均驱动 Live2D 模型。每次头部触碰在松手后下压、回弹一次，约 0.4 秒归位。
