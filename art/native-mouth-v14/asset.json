@@ -1,0 +1,16 @@
+{
+  "file": "mouth-interior.png",
+  "sha256": "1b2a753a4b62bea3d97f1486d0f0a5b5814a7809da46e234165c36da19457e96",
+  "name": "ZJU-v14-mouth-interior",
+  "x": 526,
+  "y": 788,
+  "width": 128,
+  "height": 64,
+  "columns": 16,
+  "rows": 8,
+  "parentDeformer": "RotationDeformerZJUHeadRotation",
+  "drawOrder": 351,
+  "sourceLayer": "mouth-interior",
+  "meshId": "ArtMeshZJUV14MouthInterior",
+  "group": "mouth"
+}

@@ -1,0 +1,16 @@
+{
+  "file": "back-hair-inset.png",
+  "sha256": "5cbfb32ee7c436413117006cc8107c8a0ae138c59e2a89d4da28695e448b4970",
+  "width": 1253,
+  "height": 970,
+  "x": 1,
+  "y": 155,
+  "columns": 40,
+  "rows": 40,
+  "name": "ZJU-v14-back-hair-inset",
+  "drawOrder": 95,
+  "parentDeformer": "RotationDeformerZJUHeadRotation",
+  "sourceLayer": "back-hair-inset",
+  "meshId": "ArtMeshZJUV14BackHairInset",
+  "group": "hair-back"
+}

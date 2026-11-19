@@ -1,0 +1,33 @@
+[
+  {
+    "sourceLayer": "hair-under-ribbon",
+    "file": "hair-under-ribbon.png",
+    "name": "ZJU-v14-hair-under-ribbon",
+    "width": 238,
+    "height": 291,
+    "x": 919,
+    "y": 494,
+    "columns": 20,
+    "rows": 25,
+    "drawOrder": 96,
+    "parentDeformer": "RotationDeformerZJUHeadRotation",
+    "sha256": "88044f086ae216bb73153a74d4cb2297f6db008f3df0e3529fb50e76e8bf039d",
+    "meshId": "ArtMeshZJUV14HairUnderRibbon",
+    "textureId": "4a98cb7a-e928-4d9a-b916-af6d3a94738e"
+  },
+  {
+    "sourceLayer": "hair-under-collar",
+    "file": "hair-under-collar.png",
+    "name": "ZJU-v14-hair-under-collar",
+    "width": 99,
+    "height": 123,
+    "x": 386,
+    "y": 809,
+    "columns": 9,
+    "rows": 11,
+    "drawOrder": 98,
+    "sha256": "edbd65b8896e612e85ead23d12fd8c861e727f9dbfe43602a976edc36b55a282",
+    "meshId": "ArtMeshZJUV14HairUnderCollar",
+    "textureId": "72293cab-90d3-4d24-a7e6-501a79977afd"
+  }
+]

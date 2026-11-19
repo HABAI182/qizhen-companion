@@ -1,0 +1,621 @@
+{
+  "sha256": "c50cfa974c764755e753acf7f3e894b96d3f5a516a31499841d731be1cdc7854",
+  "state": {
+    "modelId": "eb1e8ebb-8059-433f-a39b-ff4aaa415c4c",
+    "parameters": [
+      {
+        "id": "ParamAngleX",
+        "value": 0.0
+      },
+      {
+        "id": "ParamAngleY",
+        "value": 0.0
+      },
+      {
+        "id": "ParamAngleZ",
+        "value": 0.0
+      },
+      {
+        "id": "ParamEyeLOpen",
+        "value": 1.0
+      },
+      {
+        "id": "ParamEyeLSmile",
+        "value": 0.0
+      },
+      {
+        "id": "ParamEyeROpen",
+        "value": 1.0
+      },
+      {
+        "id": "ParamEyeRSmile",
+        "value": 0.0
+      },
+      {
+        "id": "ParamEyeBallX",
+        "value": 0.0
+      },
+      {
+        "id": "ParamEyeBallY",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBrowLY",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBrowRY",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBrowLX",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBrowRX",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBrowLAngle",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBrowRAngle",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBrowLForm",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBrowRForm",
+        "value": 0.0
+      },
+      {
+        "id": "ParamMouthForm",
+        "value": 0.0
+      },
+      {
+        "id": "ParamMouthOpenY",
+        "value": 0.0
+      },
+      {
+        "id": "ParamCheek",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBodyAngleX",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBodyAngleY",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBodyAngleZ",
+        "value": 0.0
+      },
+      {
+        "id": "ParamBreath",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHairFront",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHairSide",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHairBack",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHandRPress",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHandRX",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHandRY",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHandLPress",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHandLX",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHandLY",
+        "value": 0.0
+      },
+      {
+        "id": "ParamRibbonSway",
+        "value": 0.0
+      },
+      {
+        "id": "ParamHeadBounce",
+        "value": 0.0
+      },
+      {
+        "id": "ParamMouseGrip",
+        "value": 0.0
+      },
+      {
+        "id": "ParamEyeLidForm",
+        "value": 0.0
+      }
+    ],
+    "items": [
+      {
+        "id": "ArtMesh",
+        "name": "23 键盘求是鹰 [official-eagle-keyboard]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 464,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh2",
+        "name": "22 鼠标求是鹰 [official-eagle-mouse]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 463,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh3",
+        "name": "21 胸前完整浙大校标 [official-complete-bow-seal]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 419,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh4",
+        "name": "20 头饰完整浙大校标 [official-complete-university-seal]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 461,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh5",
+        "name": "19 发夹求是鹰 [official-eagle-hairpin]",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 500,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh6",
+        "name": "18 键盘侧手掌 [palm-keyboard]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 451,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh7",
+        "name": "17 鼠标侧手掌 [palm-mouse]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 450,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh8",
+        "name": "16 完整键盘 [keyboard]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 440,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh9",
+        "name": "15 完整鼠标 [mouse]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 430,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh10",
+        "name": "14 键盘侧袖口 [sleeve-keyboard]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 445,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh11",
+        "name": "13 鼠标侧袖口 [sleeve-mouse]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 420,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh12",
+        "name": "12 画面右侧羽饰 [feather-right]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 401,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh13",
+        "name": "11 画面左侧羽饰 [feather-left]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 400,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh14",
+        "name": "10 原画嘴形 [mouth]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 350,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh15",
+        "name": "09R 眉毛 [brow-R]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 340,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh16",
+        "name": "08R 闭眼替换 [closed-eye-R]",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 500,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh17",
+        "name": "07R 原画虹膜瞳孔 [iris-R]",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 500,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh18",
+        "name": "06R 眼白与眼线 [eye-R]",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 500,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh19",
+        "name": "09L 眉毛 [brow-L]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 340,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh20",
+        "name": "08L 闭眼替换 [closed-eye-L]",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 500,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh21",
+        "name": "07L 原画虹膜瞳孔 [iris-L]",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 500,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh22",
+        "name": "06L 眼白与眼线 [eye-L]",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 500,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh23",
+        "name": "05 呆毛 [ahoge]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 210,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh24",
+        "name": "04 头发与完整脸底 [head]",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 500,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh25",
+        "name": "03 画面右侧后发 [side-hair-right]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 112,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh26",
+        "name": "02 画面左侧后发 [side-hair-left]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 111,
+        "masks": []
+      },
+      {
+        "id": "ArtMesh27",
+        "name": "01 身体与隐藏衣料 [torso]",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 100,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeScreenLeftWhite",
+        "name": "ZJU-v14-padded-eye-screen-left-white",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 610,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeScreenLeftIris",
+        "name": "ZJU-v14-padded-eye-screen-left-iris",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 620,
+        "masks": [
+          "ArtMeshZJUV14PaddedEyeScreenLeftWhite"
+        ]
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeScreenLeftUpperLash",
+        "name": "ZJU-v14-padded-eye-screen-left-upper-lash",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 630,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeScreenLeftLowerLash",
+        "name": "ZJU-v14-padded-eye-screen-left-lower-lash",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 630,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeScreenRightWhite",
+        "name": "ZJU-v14-padded-eye-screen-right-white",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 610,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeScreenRightIris",
+        "name": "ZJU-v14-padded-eye-screen-right-iris",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 620,
+        "masks": [
+          "ArtMeshZJUV14PaddedEyeScreenRightWhite"
+        ]
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeScreenRightUpperLash",
+        "name": "ZJU-v14-padded-eye-screen-right-upper-lash",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 630,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeScreenRightLowerLash",
+        "name": "ZJU-v14-padded-eye-screen-right-lower-lash",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 630,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14PaddedEyeFringeOcclusion",
+        "name": "ZJU-v14-padded-eye-fringe-occlusion",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 650,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14EyeScreenLeftClosedClean",
+        "name": "ZJU-v14-eye-screen-left-closed-clean",
+        "visible": true,
+        "opacity": 0.0,
+        "opacityReadable": true,
+        "drawOrder": 640,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14EyeScreenRightClosedClean",
+        "name": "ZJU-v14-eye-screen-right-closed-clean",
+        "visible": true,
+        "opacity": 0.0,
+        "opacityReadable": true,
+        "drawOrder": 640,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14FaceNativeComplete",
+        "name": "ZJU-v14-face-native-complete",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 200,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14FrontHairNative",
+        "name": "ZJU-v14-front-hair-native",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 201,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14BackHairComplete",
+        "name": "ZJU-v14-back-hair-complete",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 95,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14WristBridgeR",
+        "name": "ZJU-v14-wrist-bridge-R",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 449,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14WristBridgeL",
+        "name": "ZJU-v14-wrist-bridge-L",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 449,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14BackHairInset",
+        "name": "ZJU-v14-back-hair-inset",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 95,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14MouthInterior",
+        "name": "ZJU-v14-mouth-interior",
+        "visible": true,
+        "opacity": 0.0,
+        "opacityReadable": true,
+        "drawOrder": 351,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14HairUnderRibbon",
+        "name": "ZJU-v14-hair-under-ribbon",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 96,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14HairUnderCollar",
+        "name": "ZJU-v14-hair-under-collar",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 98,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14HairRibbonSeamBridge",
+        "name": "ZJU-v14-hair-ribbon-seam-bridge",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 96,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14HairCollarSeamBridge",
+        "name": "ZJU-v14-hair-collar-seam-bridge",
+        "visible": false,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 98,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14HairCollarOverlapComplete",
+        "name": "ZJU-v14-hair-collar-overlap-complete",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 98,
+        "masks": []
+      },
+      {
+        "id": "ArtMeshZJUV14HairRightCollarOverlap",
+        "name": "ZJU-v14-hair-right-collar-overlap",
+        "visible": true,
+        "opacity": 1.0,
+        "opacityReadable": true,
+        "drawOrder": 98,
+        "masks": []
+      }
+    ]
+  }
+}

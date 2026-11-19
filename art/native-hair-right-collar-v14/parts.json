@@ -1,0 +1,17 @@
+[
+  {
+    "sourceLayer": "hair-right-collar-overlap",
+    "file": "hair-right-collar-overlap.png",
+    "name": "ZJU-v14-hair-right-collar-overlap",
+    "width": 162,
+    "height": 86,
+    "x": 655,
+    "y": 833,
+    "columns": 14,
+    "rows": 8,
+    "drawOrder": 98,
+    "sha256": "95c624f5b7df4b14d181dee98c88ace46f563f57c9c77508db1081ef583206c6",
+    "meshId": "ArtMeshZJUV14HairRightCollarOverlap",
+    "textureId": "6fa3eb32-3735-4dc8-aa6e-f63429507ccd"
+  }
+]

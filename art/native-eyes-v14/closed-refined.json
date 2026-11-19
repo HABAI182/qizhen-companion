@@ -1,0 +1,20 @@
+{
+  "nativeClosedStrokes": [
+    {
+      "meshId": "ArtMeshZJUV14EyeScreenLeftClosedClean",
+      "side": "left",
+      "source": "native-padded/eye-screen-left-closed-clean.png"
+    },
+    {
+      "meshId": "ArtMeshZJUV14EyeScreenRightClosedClean",
+      "side": "right",
+      "source": "native-padded/eye-screen-right-closed-clean.png"
+    }
+  ],
+  "geometricClosureRetained": true,
+  "endpointInkCrossfadeRange": [
+    0,
+    0.25
+  ],
+  "visualAcceptance": "pending"
+}

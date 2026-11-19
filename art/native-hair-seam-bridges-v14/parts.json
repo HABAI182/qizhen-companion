@@ -1,0 +1,33 @@
+[
+  {
+    "sourceLayer": "hair-ribbon-seam-bridge",
+    "file": "hair-ribbon-seam-bridge.png",
+    "name": "ZJU-v14-hair-ribbon-seam-bridge",
+    "width": 231,
+    "height": 280,
+    "x": 910,
+    "y": 482,
+    "columns": 20,
+    "rows": 24,
+    "drawOrder": 96,
+    "parentDeformer": "RotationDeformerZJUHeadRotation",
+    "sha256": "410dd0fedf72fd0cd288168861b4664dc445f9049ae49e6e4a6973e9466318c9",
+    "meshId": "ArtMeshZJUV14HairRibbonSeamBridge",
+    "textureId": "1afce800-2889-466d-b164-5aecbc700af8"
+  },
+  {
+    "sourceLayer": "hair-collar-seam-bridge",
+    "file": "hair-collar-seam-bridge.png",
+    "name": "ZJU-v14-hair-collar-seam-bridge",
+    "width": 99,
+    "height": 54,
+    "x": 387,
+    "y": 833,
+    "columns": 9,
+    "rows": 5,
+    "drawOrder": 98,
+    "sha256": "7fb3121de9359c1f2606828a181b1273219112c1eadb8dbbbf306fc4ac1e3cae",
+    "meshId": "ArtMeshZJUV14HairCollarSeamBridge",
+    "textureId": "07753d0b-3073-4469-be1f-9a9de9ade6ca"
+  }
+]
