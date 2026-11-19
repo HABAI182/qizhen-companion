@@ -2,3 +2,21 @@ node_modules/
 dist/
 src-tauri/target/
 *.log
+
+# Local Cubism checkpoints and per-pose inspection output
+/art/checkpoints/
+/art/rig-v14-head-plans/
+/art/native-head-review/head-x*-y*.png
+/art/native-head-review/capture-report.json
+/art/native-hands-v14/*.png
+!/art/native-hands-v14/native-hands-contact.png
+/art/native-hands-v14/ArtMesh*-before.json
+/art/native-hands-v14/ArtMesh*-bound.json
+/art/native-hands-v14/ArtMesh*-write-*.json
+/art/native-hands-v14/*-reopen-snapshots.json
+/art/native-hands-v14/before-parameters.json
+/art/render-check/*.png
+!/art/render-check/contact-sheet.png
+/art/v14-eye-review/closed.png
+/art/v14-eye-review/look-*.png
+/art/v14-eye-review/neutral.png
