@@ -13,6 +13,7 @@ export const expressions = [['default','日常'],['smile','开心'],['sleepy','�
 export const motions=[['nod','轻轻点头']];
 export const actionIds=new Set([...expressions,...motions].map(x=>x[0]));
 export const shortcutCount=25;
+export const recoveryShortcut='Ctrl+Alt+Shift+R';
 
 export function normalizeActionChord(chord){
  if(typeof chord!=='string'||chord.length>48)return null;
@@ -27,8 +28,8 @@ export function normalizeActionChord(chord){
   if(number<1||number>24)return null;
   key='F'+number;
  }else if(!/^[A-Z0-9]$/.test(key))return null;
- if(key==='Z'&&modifiers.has('ctrl')&&modifiers.has('alt'))return null;
- return [...['Ctrl','Alt','Shift'].filter(modifier=>modifiers.has(modifier.toLowerCase())),key].join('+');
+ const normalized=[...['Ctrl','Alt','Shift'].filter(modifier=>modifiers.has(modifier.toLowerCase())),key].join('+');
+ return normalized===recoveryShortcut?null:normalized;
 }
 
 export function validExceptionName(name){

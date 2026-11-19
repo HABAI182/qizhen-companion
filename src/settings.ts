@@ -1,7 +1,7 @@
 import {
  call,desktop,escapeHtml,onPreferences,prefs,updatePreferences,sendAction,notify,type Preferences,
 } from './bridge';
-import {expressions,motions,normalizeActionChord,normalizePreferences,validExceptionName} from './preferences.mjs';
+import {expressions,motions,normalizeActionChord,normalizePreferences,validExceptionName,recoveryShortcut} from './preferences.mjs';
 import {version} from '../package.json';
 import {bindWindowDrag} from './window-drag';
 import './settings.css';
@@ -100,7 +100,7 @@ export async function settingsPage(app:HTMLElement){
   ${panel('desktop',
    group('窗口',
     toggle('alwaysOnTop','窗口置顶')
-    +toggle('clickThrough','整窗鼠标穿透','可从托盘或 Ctrl+Alt+Z 找回')
+    +toggle('clickThrough','整窗鼠标穿透',`可从托盘或 ${recoveryShortcut} 找回`)
     +toggle('edgeSnap','靠近屏幕边缘时吸附')
     +toggle('fullscreenHide','同屏全屏时隐藏')
     +`<label class="field-stack"><strong>全屏避让例外</strong><small>填写程序文件名，多个用逗号或换行分隔。</small><textarea id="fullscreenExceptions" placeholder="game.exe, player.exe" maxlength="4000" rows="2"></textarea></label>`
@@ -115,7 +115,7 @@ export async function settingsPage(app:HTMLElement){
     +select('fps','绘制帧率',[[30,'30 FPS'],[60,'60 FPS']])
     +`<p id="runtimeStatus" class="runtime-status" role="status"></p><p class="version">版本 ${version}</p>`)
    +group('动作快捷键',
-    `<p class="settings-help">用 Ctrl 或 Alt 加字母、数字或 F 键。Ctrl+Alt+Z 用于找回桌宠。</p>
+    `<p class="settings-help">用 Ctrl 或 Alt 加字母、数字或 F 键。${recoveryShortcut} 用于找回桌宠。</p>
     <details id="shortcutEditor" class="settings-disclosure"><summary>编辑 25 个动作槽</summary>
     <div class="shortcut-list"></div>${button('saveShortcuts','保存快捷键')}</details>`,'data-companion-only'))}
   </div>

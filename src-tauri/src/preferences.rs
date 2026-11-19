@@ -27,16 +27,22 @@ impl Default for Preferences{fn default()->Self{Self{
  gamepad_enabled:false,sfx_enabled:false,sfx_volume:0.25,autostart:false,shortcuts:vec![Shortcut::default();25],
 }}}
 pub const ACTIONS:&[&str]=&["default","smile","sleepy","nod"];
-pub fn shortcut_key(chord:&str)->Option<(usize,bool,bool,bool)>{
+pub const RECOVERY_KEY:usize=b'R' as usize;
+pub const RECOVERY_CHORD:(usize,bool,bool,bool)=(RECOVERY_KEY,true,true,true);
+fn parse_chord(chord:&str)->Option<(usize,bool,bool,bool)>{
  let pieces:Vec<_>=chord.split('+').map(str::trim).collect();if pieces.len()<2{return None;}
  let mut ctrl=false;let mut alt=false;let mut shift=false;
  for p in &pieces[..pieces.len()-1]{match p.to_ascii_lowercase().as_str(){"ctrl"=>ctrl=true,"alt"=>alt=true,"shift"=>shift=true,_=>return None,}}
  if !ctrl&&!alt{return None;}
  let last=pieces.last()?.to_ascii_uppercase();let code=if last.len()==1&&last.as_bytes()[0].is_ascii_alphanumeric(){last.as_bytes()[0] as usize}
  else if let Some(f)=last.strip_prefix('F').and_then(|x|x.parse::<usize>().ok()){if !(1..=24).contains(&f){return None;}111+f}else{return None;};
- if ctrl&&alt&&code==90{return None;}Some((code,ctrl,alt,shift))
+ Some((code,ctrl,alt,shift))
 }
+pub fn shortcut_key(chord:&str)->Option<(usize,bool,bool,bool)>{let key=parse_chord(chord)?;(key!=RECOVERY_CHORD).then_some(key)}
 impl Preferences{
+ pub fn reserve_recovery_chord(&mut self){
+  for slot in &mut self.shortcuts{if parse_chord(&slot.chord)==Some(RECOVERY_CHORD){slot.enabled=false;}}
+ }
  pub fn with_patch(&self,patch:serde_json::Map<String,serde_json::Value>)->Result<Self,String>{
   let mut value=serde_json::to_value(self).map_err(|e|e.to_string())?;
   let fields=value.as_object_mut().ok_or("设置格式无效")?;
@@ -56,14 +62,24 @@ impl Preferences{
   for item in &mut self.fullscreen_exceptions{*item=item.trim().to_lowercase();if !item.ends_with(".exe")||item.len()>124||item.len()<5||item.chars().any(|c|c.is_control()||"\\/:*?\"<>|".contains(c)){return Err("例外请填写程序文件名，例如 game.exe".into());}}
   self.fullscreen_exceptions.sort();self.fullscreen_exceptions.dedup();
   self.shortcuts.resize(25,Shortcut::default());self.shortcuts.truncate(25);let mut seen=std::collections::HashSet::new();
-  for slot in &self.shortcuts{if !ACTIONS.contains(&slot.action.as_str()){return Err("快捷键动作无效".into());}if slot.chord.len()>48{return Err("快捷键过长".into());}if slot.enabled{let key=shortcut_key(&slot.chord).ok_or("快捷键请使用 Ctrl/Alt 加字母、数字或F键；Ctrl+Alt+Z 保留用于找回桌宠")?;if !seen.insert(key){return Err("已启用的快捷键不能重复".into());}}}
+  for slot in &self.shortcuts{if !ACTIONS.contains(&slot.action.as_str()){return Err("快捷键动作无效".into());}if slot.chord.len()>48{return Err("快捷键过长".into());}if slot.enabled{let key=shortcut_key(&slot.chord).ok_or("快捷键请使用 Ctrl/Alt 加字母、数字或 F 键。Ctrl+Alt+Shift+R 保留用于找回桌宠")?;if !seen.insert(key){return Err("已启用的快捷键不能重复".into());}}}
   Ok(())
  }
 }
 #[cfg(test)]mod tests{
  use super::*;
  #[test]fn migration_preserves_explicit_old_settings(){let mut p:Preferences=serde_json::from_str(r#"{"showKeys":false,"alwaysOnTop":false,"size":420}"#).unwrap();p.validate().unwrap();assert!(!p.show_keys);assert!(!p.always_on_top);assert_eq!(p.shortcuts.len(),25);assert!(!p.repeat_keys);}
- #[test]fn shortcut_conflicts_and_recovery_chord_are_rejected(){assert!(shortcut_key("Ctrl+Alt+Z").is_none());let mut p=Preferences::default();p.shortcuts[0]=Shortcut{enabled:true,chord:"Ctrl+Alt+1".into(),action:"smile".into()};p.shortcuts[1]=p.shortcuts[0].clone();if crate::edition::BASIC||crate::edition::STATIC{assert!(p.validate().is_ok());assert!(p.shortcuts.iter().all(|s|!s.enabled));}else{assert!(p.validate().is_err());}assert!(shortcut_key("Alt+F12").is_some());}
+ #[test]fn shortcut_conflicts_and_recovery_chord_are_rejected(){assert!(shortcut_key("Ctrl+Alt+Shift+R").is_none());let mut p=Preferences::default();p.shortcuts[0]=Shortcut{enabled:true,chord:"Ctrl+Alt+1".into(),action:"smile".into()};p.shortcuts[1]=p.shortcuts[0].clone();if crate::edition::BASIC||crate::edition::STATIC{assert!(p.validate().is_ok());assert!(p.shortcuts.iter().all(|s|!s.enabled));}else{assert!(p.validate().is_err());}assert!(shortcut_key("Alt+F12").is_some());assert!(shortcut_key("Ctrl+Alt+Z").is_some());}
+ #[test]fn a_legacy_recovery_conflict_does_not_remove_other_shortcuts(){
+  let mut p=Preferences::default();
+  p.shortcuts[0]=Shortcut{enabled:true,chord:"Shift+Ctrl+Alt+R".into(),action:"smile".into()};
+  p.shortcuts[1]=Shortcut{enabled:true,chord:"Alt+F9".into(),action:"nod".into()};
+  p.reserve_recovery_chord();
+  assert!(!p.shortcuts[0].enabled);
+  assert!(p.shortcuts[1].enabled);
+  assert_eq!(p.shortcuts[0].action,"smile");
+  assert_eq!(p.shortcuts[0].chord,"Shift+Ctrl+Alt+R");
+ }
  #[test]fn patch_updates_only_selected_fields(){
   let p=Preferences{size:377.,show_keys:false,autostart:false,..Preferences::default()};
   let patch=serde_json::from_str(r#"{"fps":30,"overlayTop":0.16}"#).unwrap();

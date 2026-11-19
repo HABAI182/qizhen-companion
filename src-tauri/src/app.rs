@@ -2,7 +2,7 @@ use std::{fs,sync::{Mutex,atomic::{AtomicU64,AtomicBool,Ordering}}};
 use serde::Serialize;
 use tauri::{Emitter,Manager,WebviewWindowBuilder,WebviewUrl,LogicalSize};
 use tauri::{menu::{Menu,MenuItem},tray::{TrayIconBuilder,TrayIconEvent,MouseButton,MouseButtonState}};
-use crate::{desktop,platform,preferences::{Preferences,ACTIONS,shortcut_key}};
+use crate::{desktop,platform,preferences::{Preferences,ACTIONS,RECOVERY_KEY,shortcut_key}};
 pub struct AppState{
  pub prefs:Mutex<Preferences>,pub window_gate:Mutex<()>,pub keyboard_presses:AtomicU64,pub mouse_presses:AtomicU64,pub samples:AtomicU64,
  pub menu_ready:AtomicBool,pub menu_requested:AtomicBool,pub menu_visible:AtomicBool,
@@ -288,7 +288,7 @@ fn schedule_recovery(app:&tauri::AppHandle){
     if before!=ignore&&pet.set_ignore_cursor_events(ignore).is_ok(){state.cursor_ignored.store(ignore,Ordering::Release);}}}
   if cursor_valid&&(now[1]&&!held[1]||now[2]&&!held[2]){dismiss_menu_outside(&app,&state,pt.x,pt.y);}
   presses.truncate(6);repeats.truncate(6);let frame=InputFrame{keys_held:count,mouse_down,new_press,new_mouse_press,key_label:presses.last().cloned().unwrap_or_default(),reach:position,target_x:landing.x,target_y:landing.y,target_zone:landing.zone.into(),cursor_x,cursor_y,cursor_moved,presses,repeats,hovering,editing};
-  let recover=(now[162]||now[163])&&(now[164]||now[165])&&now[90];
+  let recover=sampled_modifiers.0&&sampled_modifiers.1&&sampled_modifiers.2&&now[RECOVERY_KEY];
   let recovery_edge=crate::keyboard_edges::take_recover();
   if (recovery_edge||recover)&&!recover_held{schedule_recovery(&app);}
   recover_held=recover;
@@ -324,7 +324,7 @@ fn schedule_recovery(app:&tauri::AppHandle){
    if before!=ignore&&pet.set_ignore_cursor_events(ignore).is_ok(){state.cursor_ignored.store(ignore,Ordering::Release);}
   }}
   if cursor_valid&&(mouse[0]&&!previous[0]||mouse[1]&&!previous[1]){dismiss_menu_outside(&app,&state,pt.x,pt.y);}
-  let recover=down(17)&&down(18)&&down(90);if recover&&!recover_before{schedule_recovery(&app);}recover_before=recover;previous=mouse;
+  let recover=down(17)&&down(18)&&down(16)&&down(RECOVERY_KEY as i32);if recover&&!recover_before{schedule_recovery(&app);}recover_before=recover;previous=mouse;
   std::thread::sleep(std::time::Duration::from_millis(16));
  }
 });}
@@ -360,7 +360,7 @@ pub fn run(){
   }
  })
  .setup(|app|{
-  let mut p=prefs_path(app.handle()).ok().and_then(|f|fs::read(f).ok()).and_then(|s|serde_json::from_slice::<Preferences>(&s).ok()).unwrap_or_default();if p.validate().is_err(){p.shortcuts=Preferences::default().shortcuts;p.fullscreen_exceptions.clear();p.validate().map_err(std::io::Error::other)?;}
+  let mut p=prefs_path(app.handle()).ok().and_then(|f|fs::read(f).ok()).and_then(|s|serde_json::from_slice::<Preferences>(&s).ok()).unwrap_or_default();p.reserve_recovery_chord();if p.validate().is_err(){p.shortcuts=Preferences::default().shortcuts;p.fullscreen_exceptions.clear();p.validate().map_err(std::io::Error::other)?;}
   let saved=desktop::load(app.handle());let last=saved.last;app.manage(AppState{prefs:Mutex::new(p.clone()),hit_mask:Mutex::new(crate::hit_test::HitMask::default()),cursor_ignored:AtomicBool::new(cfg!(windows)),window_gate:Mutex::new(()),keyboard_presses:AtomicU64::new(0),mouse_presses:AtomicU64::new(0),samples:AtomicU64::new(0),saved:Mutex::new(saved),visibility:Mutex::new(desktop::Visibility::default()),dragging:AtomicBool::new(false),menu_dragging:AtomicBool::new(false),menu_ready:AtomicBool::new(false),menu_requested:AtomicBool::new(false),menu_visible:AtomicBool::new(false),menu_opened:Mutex::new(None),ready:AtomicBool::new(false),gamepad_connected:AtomicBool::new(false),renderer_frames:AtomicU64::new(0),renderer_kind:Mutex::new(String::new()),renderer_error:Mutex::new(String::new()),size_preview:Mutex::new(None),pet_drag_release:Mutex::new(None)});
   #[cfg(all(windows, feature = "native-qa"))]
   crate::native_qa::start(app.handle().clone())?;

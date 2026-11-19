@@ -24,7 +24,7 @@ fn transition(key:usize,down:bool){
         let alt=modifier_down(&[18,164,165]);
         let shift=modifier_down(&[16,160,161]);
         PRESS[key].store(PRESSED|u8::from(ctrl)*CTRL|u8::from(alt)*ALT|u8::from(shift)*SHIFT,Ordering::Release);
-        if key==90&&ctrl&&alt{
+        if (key,ctrl,alt,shift)==crate::preferences::RECOVERY_CHORD{
             RECOVER.store(true,Ordering::Release);
         }
     }
@@ -127,15 +127,20 @@ mod tests{
 
     #[test]
     fn short_recovery_chord_is_kept_without_repeating_during_a_hold(){
+        let key=crate::preferences::RECOVERY_KEY;
         transition(162,true);
         transition(165,true);
-        transition(90,true);
-        assert!(take_recover());
-        transition(90,true);
+        transition(90,true);transition(90,false);
         assert!(!take_recover());
-        transition(90,false);
-        transition(90,true);
-        transition(90,false);
+        transition(160,true);
+        transition(key,true);
+        assert!(take_recover());
+        transition(key,true);
+        assert!(!take_recover());
+        transition(key,false);
+        transition(key,true);
+        transition(key,false);
+        transition(160,false);
         transition(49,true);
         transition(49,false);
         transition(165,false);
